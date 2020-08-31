@@ -1,0 +1,143 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0.25em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.125em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\vn}{\varnothing}
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{0em}
+
+\section{Interpretação de Expressões que Descrevem Probabilidades}
+\paragraph{Obs:} Sempre que descrevermos textualmente uma probabilidade, devemos ser capazes de
+traduzir o evento descrito como conjunto de um $S$, que tenha todos os possíveis resultados.
+
+\bf{Exemplo:} $P(X^2 + X < 5 Y)$, interprete como um conjunto de elementos $s \in S$ tais que
+$[X(s)]^2 + [X(s)] < 5 Y(s)$.
+
+\section{Caso particular: Espaços Amostrais Finitos}
+Considere $S$ um conjunto finito (de N elementos). Podemos denotar a cardinalidade de $S$ como $|S|
+= N$.
+
+Com frequência, cálculos de probabilidade de $A \subseteq S$ envolvem determinal o número de
+elementos de $A$. Ademais, o problema se reduz a um problema de \bf{análise combinatorial}.
+
+\subsection{Número binomial ${N \choose k}$}
+Número de \it{subconjuntos} de k elementos tirados de um \it{conjunto} de N elementos. Refere-se ao
+número de combinações de k elementos proveniente de um conjunto de N elementos. Computacionalmente,
+\texttt{nchoosek(N,k)}.
+
+\begin{align*}
+    {N \choose k} = \frac{N!}{k!(N-k)!}, \text{num. de combinações} \\[0.5em]
+    m!, \text{número de permutações de m elementos}
+\end{align*}
+As permutações são sequências usando todos os $m$ elementos uma única vez.
+
+Esses dois valores - ${N \choose k}$ e $m!$ - são comumente usado em análises de probabilidade
+referentes a conjuntos finitos em que os subconjuntos têm igual probabilidade.
+
+\paragraph{Exemplo:}
+Seja $S = \{1,2,3,4,5\}$ iid.
+
+Nesse cenário, a probabilidade de qualquer $A \subseteq S$ é $P(A) = \frac{|A|}{|S|}$.
+Lembrando que só vale para espaços amostrais finitos com todos os subconjuntos unitários
+equiprováveis.
+
+\section{Um experimento populacional...}
+Conside $N_P$ indivíduos sem contato entre si, selecionados aleatoriamente de uma população.
+Considere que cada indivíduo tem uma probabilidade $p$ de ter contraído COVID-19. Qual a
+probabilidade de exatamente $k$ pessoas dessas $N \; (0 \leq k \leq N_P)$ tenha contraído COVID-19?
+
+\paragraph{Definição para Eventos Independentes:}
+Dado $S$ e dados $A, B \subseteq S \; (A, B \in S)$, $A$ e $B$ são independentes se e somente se:
+$P(A \cap B) = P(A)P(B)$ (definição de independência)
+
+\newpage
+\subsection*{Solução:}
+Usando $C$ para denotar indivíduos com COVID; $H$ indivíduos sem COVID.
+\\[0.25em]
+Espaço Amostral: $S = \{(C,C,\ldots,C),(C,C,\ldots,H),\ldots,(C,C,\ldots,H,H),\ldots,(H,H,\ldots,H),\ldots\}$
+
+Cada subconjunto contém $N_P$ elementos. Temos que a cardinalidade de $S$ é: $|S| = 2^{N_P}$
+\begin{align*}
+    P(I^n_C) &= p \qquad I^n_C \rightarrow \text{ind. $n$ contraiu COVID-19} \\
+    I^n_C &= \{(C,C_n,\ldots,C),(C,C_n,\ldots,H),\ldots,(C,C_n,\ldots,H,H),\ldots,(H,C_n,\ldots,H),\ldots\} \\\\
+    P(E^{1,2,\ldots,k}_C) &= \; ? \text{ indivíduos } 1,2,3,\ldots,k \text{ contraíram COVID-19, os demais não} \\
+    E^{1,2,\ldots,k}_C &= \{C_1,C_2,\ldots,C_k,H_1,H_2,\ldots,H_{N-k}\} \\
+    E^{1,2,\ldots,k}_C &= I_C^1 \cap I_C^2 \cap I_C^3 \ldots \cap I_C^k \cap \ov{I_C^{k+1}} \cap \ov{I_C^{k+2}} \cap \ov{I_C^{N}} \\
+    P(E^{1,2,\ldots,k}_C) &= P(I_C^1) \cdot P(I_C^2) \cdot P(I_C^k) \cdot P(\ov{I_C^{k+1}}) \cdot
+    P(\ov{I_C^{k+2}}) \cdot P(\ov{I_C^N)} \\
+    P(E^{1,2,\ldots,k}_C) &= \underbrace{p \cdot p \ldots \cdot p}_{k} \cdot \underbrace{(1-p)
+    \cdot (1-p) \ldots (1-p)}_{N-k} \\
+    P(E^{1,2,\ldots,k}_C) &= p^k \cdot (1-p)^{N-k}
+\end{align*}
+\\[-0.5em]
+Agora, precisamos generalizar o resultado para o caso de $k$ indivíduos quaisquer, não só os $k$
+primeitos. Como existem ${N \choose k}$ possibilidades de extrair $k$ pessoas a partir do grupo de
+$N_P$ pessoas, e como os conjuntos $E^{\ldots}$ são disjuntos:
+
+$P(k \text{ contamidados}) = {N \choose k} p^k (1-p)^{N-k}$, sendo $k$ contamidados a união de
+todos os $E^{(\ldots)}_C$.
+
+\end{document}
