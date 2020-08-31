@@ -1,4 +1,4 @@
-TARGET = lectureNotes.pdf
+TARGET = $(shell basename `pwd`.pdf)
 BIBTEX = bibtex
 LATEX = pdflatex
 
@@ -27,6 +27,6 @@ $(TARGET): $(MAIN_FILE) $(SOURCES)
 	@cp $(PDF_FILE) $(TARGET)
 
 clean:
-	rm -f *~ *.dvi *.ps *.backup *.aux *.log
-	rm -f *.lof *.lot *.bbl *.blg *.brf *.toc *.idx
-	rm -f *.pdf
+	rm -f *~ *.dvi *.ps *.backup *.aux *.log *.synctex*
+	rm -f *.lof *.lot *.bbl *.blg *.brf *.toc *.idx *.fdb* *.fls
+	rm -f $(PDF_FILE) $(TARGET)
