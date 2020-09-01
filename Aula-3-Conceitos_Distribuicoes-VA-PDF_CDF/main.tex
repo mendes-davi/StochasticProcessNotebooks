@@ -1,0 +1,165 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.5em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.125em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{0pt}
+
+\section{Experimento de Bernoulli}
+O experimento é bastante simples e apresenta um espaço amostral $S$ com $|S| = 2$. Podemos denotar
+$S = \{s_1,s_2\}$. Ademais,
+
+\begin{itemize}[noitemsep,topsep=0pt]
+    \item $P(\{s_1\}) = p$, $p \in [0,1]$
+    \item $P(\{s_2\}) = 1 - p$
+    \item $P(\vn) = 0$
+    \item $P(S) = 1$
+\end{itemize}
+Satisfaz os axiomas de Kolmogorov independente doo valor de $p$.
+\\
+\section{Experimento Binomial}
+$S \rightarrow$ conjunto de ênuplas ordenadas, em cada elemento de cada ênupla assume 1 de 2
+valores, com os \bf{eventos associados ao caso 1 ou caso 2 em cada posição} sendo
+\it{independentes} de uma posição para outra (o evento associado ao i-ésimo termo de ser $s_1$
+independe do j-ésimo termo ser $s_1, \; \forall \; i,j \in \{1,2,\ldots,n\} \text{ com } i \neq
+j$).
+
+Nesta situação, nós provamos na última aula [vide notas da aula 2] que as probabilidades de eventos
+associados a $k$ posições assumirem um dos dois valores (digamos $s_1$) seguem a chamada
+distribuição binomial:
+\begin{align*}
+P(k \text{ elementos } 1) = {N \choose k} p^k (1-p)^{N-k}, \text{todas as ênuplas com k elementos iguais a 1}
+\end{align*}
+
+\vspace{-0.5em}
+\section{Variáveis Aleatórias}
+\bf{Conceito Formal:} Uma variável aleatória $X$ é uma função que associa o resultado de um
+experimento a um número, que pode ser real, complexo, inteiro, fracionário etc;
+
+Uma variável $X: S \rightarrow \mathbb{D}$ é dita contínua se $C \mathbb{D}$ é um conjunto numérico
+incontável; é dita discreta se $C \mathbb{D}$ é um conjunto contável.
+
+Dado um experimento com espaço amostral $S$:
+\begin{align*}
+    X: S \rightarrow \mathbb{R} \text{ ou } X: S \rightarrow \mathbb{C} \text{ ou } X: S
+    \rightarrow \mathbb{Z} \text{ etc}
+\end{align*}
+
+\vspace{-0.75em}
+\subsection{Probabilidade Induzida - $P: \varepsilon \rightarrow [0,1]$}
+Considere um conjunto amostral $S$ vinculado a um espaço de probabilidades ($S, \varepsilon, P$).
+Considere ainda um v.a. $X: S \rightarrow \mathbb{R}$. Podemos definir a probabilidade induzida por
+$X$ como sendo:
+\begin{align*}
+    P_X(\mathbb{A}) = P(\{s \in S / X(s) \in \mathbb{A}\}), \text{onde } \mathbb{A} \in \varepsilon_{\mathbb{R}}, \text{ com } \varepsilon_{\mathbb{R}} \subseteq
+    P(\mathbb{R})
+\end{align*}
+Podemos provar que $P_X$ satisfaz os axiomas de Kolmogorov.
+
+\paragraph{Exemplo:}\mbox{}\\
+$S:$ conjunto de ênuplas ordenadas em um experimento binomial.\\
+$X(s):$ número de elementos na ênupla s iguais ao valor 1.\\
+$P(\{k\}) = {N \choose k} p^k (1-p)^{N-k}$
+
+\paragraph{Notação:}
+\begin{align*}
+\stk[red]{P_X(2), P_X(3)} &\rightarrow P_X(\{2\}), P_X(\{3\})\\
+\stk[red]{P_X(2,3)} &\rightarrow P_X(\{2,3\}) = {n \choose 2}p^2(1-p)^{n-2} + {n \choose 3}p^3(1-p)^{n-3} \\
+P(X \in [2,4]) &= P(\{s \in S / X(s) \in [2,4]\}) = P_X([2,4]) \\
+P(X^2 + X^3 > 2 e X^2 + X^3 < 3) &= P(\{s \in S / X(s) \in (2,3)\}) \\
+P(|X-\mu_X| > k \sigma) &= P(\{s \in S / |X(s) - \mu_X| > k \sigma \}) = P_X(\mathbb{A})
+\end{align*}
+
+\section{Função Densidade de Probabilidade - PDF}
+Intuitivamente, a função densidade de probabilidade (PDF) é uma função que, ao ser integrada em um
+conjunto numérico, fornece a probabilidade desse conjunto.
+
+\subsection{Definição formal (pré-requisito: CDF)}
+Seja $X: S \rightarrow \mathbb{R}$ uma variável aleatória. A função de distribuição acumulada de
+probabilidade (CDF) de $X$ é a função $F_X: \mathbb{R} \rightarrow [0,1]$ definida por:
+\begin{align*}
+    F_X(x) = P_X([-\infty, x]) = P(s \in S / X(s) \leq x)
+\end{align*}
+
+\paragraph{Exemplo:}
+Experimento de lançar um dado de seis faces. Dado equilibrado (iid). $S = \{a,b,c,d,e,f\}$\\
+$S \rightarrow \mathbb{R} \; X(a) = 1;\; X(b) = 2;\; X(c) = 3;\; \ldots X(f) = 6$
+\begin{align*}
+    F_X(0) = 0 && F_X(0.9) = 0 && F_X(1) = 1/6 && F_X(1.5) = 1/6 \\
+    F_X(1.98) = 1/6 && F_X(2) = 2/6 && F_X(2.9) = 2/6 && F_X(3) = 3/6 \\
+    \ldots
+\end{align*}
+
+\paragraph{Finalmente:}
+$P_X((2,5]) = F_X(5) - F_X(2) = F_X((-\infty, 5]) - F_X((-\infty, 2])$
+
+\end{document}
