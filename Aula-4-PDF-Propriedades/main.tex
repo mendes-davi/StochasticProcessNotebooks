@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.5em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.125em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{0pt}
+
+\section{Função Densidade de Probabilidade - PDF}
+Intuitivamente, a função densidade de probabilidade (PDF) é uma função que, ao ser integrada em um
+conjunto numérico, fornece a probabilidade desse conjunto.
+
+\subsection{Definição formal (pré-requisito: CDF)}
+Seja $X: S \rightarrow \mathbb{R}$ uma variável aleatória. A função de distribuição acumulada de
+probabilidade (CDF) de $X$ é a função $F_X: \mathbb{R} \rightarrow [0,1]$ definida por:
+\begin{align*}
+    F_X(x) = P_X([-\infty, x]) = P(s \in S / X(s) \leq x)
+\end{align*}
+
+\subsection*{Objetivo \& Definição:}
+
+Como queremos $\int^b_a f_X(x)dx = P_X((a,b]) = F_X(b) - F_X(a)$.
+
+Para que isso aconteça, vamos definir $f_X(x) = \frac{d}{dx}F_X(x)$
+
+\textbf{Definição:} Dada uma variável aleatória com função de distribuição acumulada $F_x$, a
+função densidade de probabilidade (PDF) é definida como:
+\begin{align*}
+f_X(x) &= \frac{d}{dx}F_X(x), \\
+       &\text{e fica valendo a propriedade:} \\
+\int^b_a f_X(x)dx &= P_X((a,b]) = F_X(b) - F_X(a)
+\end{align*}
+\\[-1.5em]
+\section{Relação entre PDF e Função Massa de Probabilidade (PMF)}
+Considere uma variável discreta $\bf{x}$, ou seja, dado o espaço amostral $S$, a imagem de $X: S
+\rightarrow C \mathbb{D}_X$ é um conjunto discreto (finito ou infinito contável).
+\\
+\bf{Exemplo de uma v.a. discreta:} jogar um dado de 6 faces $I_X = \{1,2,3,4,5,6\}$ (conjunto
+discreto)
+\\
+\bf{Exemplo de uma v.a. contínua:} Aferir a pressão sistólica de um indivíduo $I_X=\{0,200mHg\}$ (conjunto contínuo)
+\\
+Para a PMF, em cada conjunto podemos estabelecer a probabilidade de cada subconjunto unitário:
+\begin{itemize}[noitemsep,topsep=2pt]
+    \item $P_x(\{1\}) = 1/6$
+    \item $P_x(\{2\}) = 1/6$
+    \item $P_x(\{3\}) = 1/6$
+    \item $P_x(\{4\}) = 1/6$
+    \item $P_x(\{5\}) = 1/6$
+    \item $P_x(\{6\}) = 1/6$
+\end{itemize}
+
+Para uma v.a. discreta podemos definir a PMF: função em domínio discreto que atribui a cada ponto
+discreto de $I_X$ o valor de probabilidade do conjunto unitário com aquele ponto.
+\\
+Mas podemos calcular também PDF: função em domínio contínuo que, neste caso, vale 0 em todos os
+pontos do domínio com exceção dos pontos que fazem parte da imagem de $\bf{x}$. Nesses pontos a
+PDF é um impulso cuja magnitude é a probabilidade do conjunto em cada ponto apenas.
+
+\section{Propriedades da Função de Densidade Probabilidade - PDF}
+Essencialmente,
+\begin{align*}
+    f_X(x) &\geq 0, \; \forall \; x \in \mathbb{R} \\
+    \int^\infty_{-\infty} f_X(x)dx &= 1
+\end{align*}
+\bf{Dada qualquer função $g$ que satisfaça as duas propriedades acima uma existe variável aleatória
+cuja PDF é $g$.}
+\\
+Na prática, na definição de PDFs desconsideramos descontinuidades em pontos discretos, a favor de
+versões contínuas naqueles pontos. \it{vide Teorema da Inversão}
+
+\subsection{Algumas Propriedades \ldots}
+Dada uma v.a. $X$ com PDF $f_X(x)$, alguns números descrevem as estatística básica de $X$. Em ordem
+de importância:
+
+$E(x) \rightarrow$ valor esperado, média, expectância, esperança matemática
+\begin{align*}
+    E(X) = \int^\infty_{-\infty} x \cdot f_X(x)dx \rightarrow \text{média dos valores, ponderada pela PDF de cada valor.}
+\end{align*}
+\\[-0.25em]
+Variância: Média de todos os desvios quadráticos, ponderados pela PDF dos valores.
+\begin{align*}
+    Var(X) = \int^\infty_{-\infty} (x - E(X))^2 \cdot f_X(x)dx
+\end{align*}
+
+Desvio padrão $\sigma$: $\sigma - \sqrt{Var(X)} \rightarrow$ envolve uma ideia de variação mas
+mantém as unidades da v.a.
+
+
+\end{document}
