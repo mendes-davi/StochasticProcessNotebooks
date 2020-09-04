@@ -1,0 +1,130 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.125em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{0pt}
+
+\section{Um breve exercício: \it{Mounty Hall Problem}}
+Suponha 3 portas que escondem um objeto. Atrás de uma porta, há a representação de um carro.
+Ademais, cada uma das outras portas esconde o desenho de uma cabra.
+
+Um apresentador solicita que um participante escolha uma das portas. A ideia é que se o
+participante acerta a (porta) que está a frente do carro, ele leva o carro como prêmio!! O
+apresentador sempre mostra uma das portas após a escolha inicial, revelando uma cabra. Ele então
+questiona o participante se ele deseja trocar sua escolha.
+\\
+\bf{Pergunta:} Para tentar aumentar a chance de ganhar, o participante deve trocar, deve manter ou
+não faz diferença?
+
+\section{Proprieades da PDF (continuação)}
+\paragraph{Momentos}
+Para a variável aleatória $X$: são números que traduzem informação sobre o comportamento
+estatístico de uma variável, em crescente nível de detalhamento acumulado.
+
+\bf{Definição formal:} Momentos de orden $m$ (momento não-central de ordem $m$) $M_m =
+\int^\infty_{-\infty}
+x^mf_X(x)dx$, $M_1 = \mathbb{E}(X)$, $M_0 = 1 \; \forall $ v.a.
+\\[0.25em]
+O momento central em torno de $\mathbb{E}(X)$ é $C_m = \int^\infty_{-\infty} (x-\mathbb{E}(X))^m f_Xdx$
+\\
+O momento central em torno de $k$ é $C_m = \int^\infty_{-\infty} (x-k)^m f_Xdx$
+
+Na prática, conseguimos estimar momentos (usando estimadores). Ter um estimador preciso é tão mais
+difícil quanto maior for a ordem. Nem toda v.a. possui todos os momentos (a integral pode não
+convergir).
+
+Quandos os momentos existem, conhecer uma PDF equivale a conhecer infinitos momentos. Ou seja,
+saber N momentos não nos permite conhecer qual a PDF.
+
+\section{Variável Aleatória Gaussiana}
+Uma variável aletória $X$ é dita normal ou Gaussiana quando sua PDF é data por:
+
+\begin{align*}
+    f_X(x) &= \frac{1}{\sqrt{2\pi A}} \exp{[-\frac{1}{2} \frac{(x-B)^2}{A}]}, \; \forall \; x, A, B
+    \in \mathbb{R}, A > 0. \\
+    \text{alternativamente: } f_X(x) &= \frac{1}{\sqrt{2\pi \sigma^2}} \exp{[-\frac{1}{2} \frac{(x-\mu)^2}{\mu}]} \\
+    \\
+           &\text{Demonstrar:} \\
+    \\
+    f_X(x) &> 0, \; \forall \; x \in \mathbb{R} \\
+    \int^\infty_{-\infty} f_X(x) &= 1 \it{ confira demonstração de Poisson}
+\end{align*}
+\\
+\bf{Obs:} $\mathbb{E}(X) = \int^\infty_{-\infty} x \cdot f_X(x)dx = B = M_1$ e
+$Var(X) = A = C_2$
+
+Observe que ao se tratar de PDF Gaussiana os 2 momentos servem para descrever a v.a. em sua
+totalidade. O ponto de máximo de uma PDF é o valor de $x$ denominado moda. Na Gaussiana: moda,
+média e mediana são iguais. Mediana é o x tal que: $\int^x_{-\infty} f_X(\lambda)d\lambda = \int^\infty_{x} f_X(\lambda) d\lambda = 0.5$
+
+\end{document}
