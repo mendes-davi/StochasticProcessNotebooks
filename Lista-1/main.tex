@@ -1,0 +1,207 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0em}{-0.5em}{0em}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.5em}{0em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\vn}{\varnothing}
+
+\newenvironment{nscenter}
+ {\parskip=1.25em\par\nopagebreak\centering}
+ {\par\noindent\ignorespacesafterend}
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{0pt}
+
+\section*{Lista 1 - Processos Estocásticos}
+Davi de Alencar Mendes (16/0026415) \url{dmendes@aluno.unb.br}
+\\
+\section*{Problema 1}
+\begin{nscenter}
+Apresente a definição formal de probabilidade, enunciando os axiomas de Kolmogorov. Especifique
+claramente o tipo de conjunto que constitui o domínio da função probabilidade $P[\cdot]$, em termos
+de um espaço amostral $S$.
+\end{nscenter}
+Uma medida de probabilidade $P[\cdot]$ é uma função que mapeia eventos no espaço amostral a
+números reais tais que:
+
+\begin{enumerate}
+    \setlength\itemsep{0em}
+    \item Para qualquer evento $\mathbb{E}$, $P[\mathbb{E}] \geq 0$
+    \item $P[S] = 1$
+    \item Para qualquer coleção contável $A_1, A_2,\ldots$ de eventos mutuamente exclusivos:\\ $P[A_1
+        \cup A_2 \cup \ldots] = P[A_1] + P[A_2] + \ldots$
+\end{enumerate}
+
+\section*{Problema 2}
+\subsubsection*{a) $P(A \cup B) = P(A) + P(B) - P(A \cap B) \; \forall \; A,B \in \mathbb{E}$}
+Notamos que $A \cap \ov{B}$ e $B$ são disjuntos e tem união $A \cup B$. Então:
+\begin{align}
+    P(A \cup B) = P(B) + P(A \cap \ov{B}) \label{eq:t4_1}
+\end{align}
+Em seguida, notamos que $A \cap \ov{B}$ e $A \cap B$ são disjuntos e tem união $A$. Então:
+\begin{align}
+    P(A) = P(A \cap B) + P(A \cap \ov{B}) \label{eq:t4_2}
+\end{align}
+Subtraindo \ref{eq:t4_2} de \ref{eq:t4_1}, obtemos:
+\begin{align*}
+    P(A \cup B) = P(A) + P(B) - P(A \cap B)
+\end{align*}
+
+\subsubsection*{b) $P(\ov{A}) = 1 - P(A)$}
+Utilizando os Axiomas 3 e 2 fazemos:
+\begin{align*}
+    S &= A \cup \ov{A} \\
+    1 &= P(A) + P(\ov{A}) \\
+    P(\ov{A}) &= 1 - P(A)
+\end{align*}
+
+\section*{Problema 3}
+\begin{nscenter}
+Seja $S$ um espaço amostral, e seja $A_i$ um subconjunto de $S$ pertencente ao domínio da função de probabilidade $P, \; \forall \; \in \{1,2,3,\ldots,N\}$ com $N$ um valor inteiro positivo.
+\\
+Demonstre que $P(\bigcup^N_{i=1} A_i) \leq \sum^N_{i=1} P(A_i)$.
+\end{nscenter}
+Sabemos que a união de dois eventos é dada por: $P\{A\} = P\{A_1\} + P\{A_2\} - P\{A_1 A_2\}$.
+
+De maneira similar, a união de três eventos é dada por: $P\{A\} = P\{A_1\} + P\{A_2\} + P\{A_3\}
+- P\{A_1 A_2\} - P\{A_1 A_3\} - P\{A_2 A_3\}$
+
+Tomando $p_i = P\{A_i\}, p_{i,j} = P\{A_i A_j\}, p_{i,j,k} = P\{A_i A_j A_k\} \ldots$
+
+Nota-se que a união de 2 eventos é: $P\{A\} = \sum p_i - \sum p_{i,j}$, 3 eventos: $P\{A\} = \sum p_i - \sum p_{i,j} + \sum p_{i,j,k}$
+
+Para a soma de cada probabilidade $p$, fazemos: $S_1 = \sum p_i, S_2 = \sum p_{i,j}, S_3 = \sum
+p_{i,j,k}, \ldots$ com $i < j < k \leq N$, de maneira que a soma de cada combinação ocorra uma
+única vez e $S_k$ contenha ${N \choose k}$ termos e $S_N$ (último termo) é a realização simultânea
+de todos os $N$ eventos.
+
+Finalmente, para a união de N eventos: $P(\bigcup_{i=1}^N A_i) = S_1 - S_2 + S_3 \ldots \pm
+S_N$.
+
+Se a união dos eventos for mutuamente exclusiva fica valendo o axioma 3 e a união dos $N$
+eventos é a soma das probabilidades (ou seja $S_i = 0 \; \forall \; i > 1$).
+
+Não sendo mutuamente exclusivos, $P(\bigcup_{i=1}^N A_i) < \sum_{i=1}^N P(A_i)$.
+
+\section*{Problema 4}
+\begin{nscenter}
+Qual a noção intuitiva que se busca incorporar na definição formal de probabilidade obtida com os
+axiomas de Kolmogorov?
+\end{nscenter}
+A probabilidade deve ser uma medida que mapeia um conjunto de eventos a um número real entre 0 e
+1.
+
+\section*{Problema 5}
+\paragraph{a)} Qual a noção intuitiva que se busca capturar com os conceitos de variáveis
+aleatórias e de processos estocásticos?
+
+As variáveis aleatórias mapeiam eventos em um conjunto numéricos e provêm uma abstração
+simplificada para denotar probabilidade de conjuntos. Processos estocásticos extendem essa ideia
+para sequências aleatórias e complementam as ferramentas matemáticas de variáveis aleatórias.
+
+\paragraph{b)} Por que um processo aleatório não é simplesmente uma coletânea de variáveis
+aleatórias?
+
+A abstração de processos aleatório como uma coletânea de variáveis não nos permite estudar as
+propriedades inerentes a ideia de um processo como um todo e limitaria o escopo do estudo.
+
+\paragraph{c)} Por que o conceito de probabilidade é essencial para o entendimento de processos
+estocásticos?
+
+Toda a teoria de probabilidade é fundamentada na definição axiomática da probabilidade.
+
+\section*{Problema 6}
+\begin{nscenter}
+Uma urna contém três bolas numeradas de 1 a 3. Um experimento consiste em remover aleatoriamente
+uma bola, registrar o número retirado, e recolocar a bola na urna antes que uma próxima
+retirada(amostragem com reposição). Calcule a probabilidade de que seja obtida a mesma bola em
+duas retiradas.
+\end{nscenter}
+O espaço amostral contém $3^2$ resultados. A combinação de 2 resultados iguais ocorre em $3$
+casos. A probabilidade de retirar 2 bolas iguais é $1/9$.
+
+\section*{Problema 7}
+\begin{nscenter}
+Uma urna contém três bolas numeradas de 1 a 5. Um experimento consiste em remover aleatoriamente
+uma bola, registrar o número retirado, e recolocar a bola na urna antes que uma próxima
+retirada(amostragem com reposição). Calcule a probabilidade de que a soma dos números obtidos nas
+duas bolas seja 5.
+\end{nscenter}
+O espaço amostral contêm $5^2$ resultados. A soma é 5 quando são retiradas as bolas 4 e 1 ou
+vice-versa, ou quando são retiradas as bolas 3 e 2 ou vice-versa. Em 4 dos 25 casos a soma é 5 com
+uma probabilidade de $4/25$.
+
+\section*{Problema 8}
+\begin{nscenter}
+Um experimento consiste em retirar aleatoriamente duas bolas numeradas de 1 a 5, sem reposição.
+Calcule a probabilidade de que a soma seja 5.
+\end{nscenter}
+O espaço amostral consiste em ${5 \choose 2} \cdot 2! = 20$ amostras. Novamente, existem 4 casos
+em que a soma é 5 (mesmo sem reposição os casos previamente citados são permitidos).  A
+probabilidade de que a soma seja 5 é $4/20 = 1/5$
+
+\it{That's all folks}
+
+\end{document}
