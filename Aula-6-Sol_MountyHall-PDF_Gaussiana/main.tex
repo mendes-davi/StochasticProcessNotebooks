@@ -39,6 +39,10 @@
 \rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
 
 \makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
 \def\mcolor#1#{\@mcolor{#1}}
 \def\@mcolor#1#2#3{%
   \protect\leavevmode
