@@ -1,3 +1,6 @@
+_minted-main
+main.pdf
+*.fdb*
 *.aux
 *.glo
 *.idx
@@ -11,6 +14,7 @@
 *.blg
 *.dvi
 *.glg
+*.fls
 *.gls
 *.ilg
 *.ind
