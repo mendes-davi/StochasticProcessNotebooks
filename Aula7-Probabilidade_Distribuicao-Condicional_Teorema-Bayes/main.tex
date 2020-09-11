@@ -1,0 +1,166 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+% \usepackage{minted}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.125em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{0pt}
+
+\section{Probabilidade Condicional}
+Seja $S$ um espaço amostral e seja $\mathbb{E}$ um conjunto de eventos - $\mathbb{E} \subseteq
+P(S), \vn \in \mathbb{E}, S \in \mathbb{E}$. Seja $P:\mathbb{E} \rightarrow [0,1]$ uma função de
+probabilidade. Neste caso, se $A \in \mathbb{E}$ tal que $P(A) > 0$, então a probabilidade de $B
+\in \mathbb{E}$ condicionada por a $A$ é definida por:
+\begin{align*}
+    P(B|A) = \frac{P(A \cap B)}{P(A)}
+\end{align*}
+\\[0.5em]
+\bf{OBS:} Na probabilidade condicional, reescalonamos as probabilidades (dividindo por $P(A)$) de
+forma que $P(A|A)$ seja 1. \bf{É como se $A$ fosse o novo espaço amostral.}
+\\
+$f(B) = P(B|A)$: esta função satisfaz os axiomas de Kolmogorov se considerarmos um novo $S = A$ e
+se substituirmos $B$ por $B \cap A$. \bf{Isso significa que a probabilidade condicional} é também
+uma função de probabilidade, porém com o espaço amostral mais restrito que o original.
+
+\subsection*{Exemplo:}
+Jogamos um dado equilibrado de $6$ faces e sabendo que o resultado é ímpar e maior que 3.
+\begin{align*}
+    S &= \{1,2,3,4,5,6\} \\
+    A &= \{4,5,6\} \\
+    B &= \{5\} \\
+    P(B|A) &= \frac{P(A \cap B)}{P(A)} = \frac{P(\{5\})}{P(\{4,5,6\})} = \frac{1/6}{1/2} =
+    \frac{1}{3}
+\end{align*}
+
+\section{Análise Bayesiana (de \it{Bayes})}
+\bf{Ex:} Jogador de basquete com alta probabilidade de acerto em lance livre: $P(A|J_1) = 0.9$.
+Jogador amador com probabilidade de acerto baixa: $P(A|J_2) = 0.1$. Um dos jogadores é sorteado,
+com probabilidades diferentes: $P(J_1) = 0.05$ e $P(J_2) = 0.95$.
+\\
+\it{Pergunta}: se um jogador foi sorteado e acertou, qual a probabilidade de que tenha sido
+$J_1$? \it{[Probabilidade a posteriori]}
+\begin{align*}
+    P(J_1|A) = \frac{P(J_1 \cap A)}{P(A)} =? && \\
+    P(A|J_1) = \frac{P(A \cap J_1)}{P(J_1)} && P(A|J_2) = \frac{P(A \cap J_2)}{P(J_2)} \\
+    P(A \cap J_1) = P(A|J_1)P(J_1) &&  P(A \cap J_2) = P(A|J_2)P(J_2) \\
+    \\
+    P(A) =  P((A \cap J_1) \cup (A \cap J_2)) && \text{pois } (A \cap J_1) \cup (A \cap J_2) = A \\
+    \\
+    \text{Usando o axioma 3:} && \\
+        && P(A) = P(A \cap J_1) P(A \cap J_2) \\
+        && P(A) = P(A|J_1)P(J_1) + P(A|J_2)P(J_2) \\
+    \\
+    \text{Teorema de Bayes:}&&{P(J_1|A) = \frac{P(A|J_1)P(J_1)}{P(A)}}\\
+\end{align*}
+
+Podemos realizar a substituição para obter:
+\begin{align*}
+    \underbrace{P(J_1|A) = \frac{P(A|J_1)P(J_1)}{P(A|J_1)P(J_1) + P(A|J_2)P(J_2)}}\\{\text{Caso
+    em que $J_1 \cap J_2 = \vn$ e $J_1 \cap J_2 = S$}} \\
+    \text{($J_1$ e $J_2$ são partição de $S$)}
+\end{align*}
+\\[-0.5em]
+Isso leva a generalização do Teorema de Bayes:
+\begin{align*}
+    P(B|A) = \frac{P(A|B)P(B)}{P(A|C_1)P(C_1) +P(A|C_2)P(C_2) + \ldots +P(A|C_N)P(C_N)}
+\end{align*}
+
+\bf{Resultado para o exemplo:}
+\begin{align*}
+    P(J_1|A) &= \frac{0.9 \cdot 0.05}{0.9 \cdot 0.05 + 0.1 \cdot 0.95} = 0.32143 \\
+    P(J_2|A) &= 0.67857
+\end{align*}
+\\[-2em]
+\section{Distribuições Condicionais}
+Seja uma variável $X: S \rightarrow \mathbb{R}$. Seja ainda $A \in \mathbb{P}(S)$ para o qual é
+definida a probabilidade $P(A)$, com $A_X$ a imagem de $A$ por $X$: $A_X = \{x \in \mathbb{R} /
+    \exists \; s \in A \text{ com } X(s) = x\}$
+
+Definição PDF Condicionada:
+
+$f_{X|A_X}(x|A_x) = \frac{f_X(x)}{P_X(A_X)} = \frac{f_X(x)}{P(A)}$, se $x \in A_X$.
+
+$f_{X|A_X}(x|A_x) = 0$, caso contário
+
+\bf{Obs:} $\frac{f_X(x)}{P_X(A_X)} = \frac{f_X(x)}{\int_{A_X} f_X(x)dx}$
+
+Teorema: A integral da PDF condicionada revela a probabilidade condicional.
+\begin{align*}
+    \int_{B_X} f_{X|A_X}(x|A_X)dx = P_X(B_X|A_X)
+\end{align*}
+
+\end{document}
