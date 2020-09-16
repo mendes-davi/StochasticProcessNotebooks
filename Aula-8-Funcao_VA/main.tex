@@ -1,0 +1,159 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+% \usepackage{minted}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.125em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{2pt}
+
+\section{Conceito de Função de Variáveis Aleatórias \& \it{Notação}}
+Ideia Intuitiva: Conhecemos a variável aleatória $X$ e realizações de $X$. Aplicar uma função aos
+resultados de uma v.a. gera novos resultados que correspondem a uma v.a. diferente. A pergunta
+central é: se sabemos propriedades da v.a. original (e.g PDF, $\bb{E}, Var$), quais as propriedades
+respectivas no segundo caso?
+
+\subsection{Definição}
+Seja $X: S \rightarrow \bb{R}$. Seja $g : \bb{R} \rightarrow \bb{R}$ uma função conhecida.
+Define-se a variável aleatória $Y : S \rightarrow \bb{R}$ como sendo uma função de $X$ a partir da
+seguinte relação:
+\begin{align*}
+    Y(s) = g(X(s)), \; \forall \; s \in S
+\end{align*}
+Observe que esta definição permite determinar uma função de probabilidade induzida:
+\begin{align*}
+    P_Y(A) = P_X(\{x \in \bb{R} / g(x) \in A\}), A \subseteq \bb{R}
+\end{align*}
+$P_Y$: satisfaz os axiomas de Kolmogorov.
+
+\subsection{Notação}
+A partir dessa definição, adota-se a notação: $Y = g(X)$. Observe que esta notação generaliza o
+conceito de uma função numética, aplicando-a a uma variável aleatória. Generalizamos também o
+conceito de número.
+
+Um número, por exemplo 3, é uma variável aleatória com uma PDF que é um impulso: $f_X =
+\delta(x-3)$, $\bb{E}(X) = 3$, $Var(X) = 0$.
+
+$\bb{E}(X+5)$ denota o valor esperado de $X$ adicionado ao valor esperado de $5$ de tal forma que
+$\bb{E}(X+5) = \bb{E}(X) + \bb{E}(5)$
+
+\subsection{Breve questionamento sobre PDF de uma função de v.a.}
+Como determinar a PDF de uma função de uma variável aleatória, se conhecemos a PDf da v.a.
+original?
+
+Um caminho para resolvermos esse problema é antes calcularmos a CDF de $Y$. Depois derivamos para
+obter a PDF.
+\begin{align*}
+    \text{CDF de }Y: F_Y(y) = P_Y((-\infty, y]) \\
+    F_Y(y) = P_X(\{x \in \bb{R}/ g(x) \in (-\infty,y]\}) \\
+    F_Y(y) = P_X(\{x \in \bb{R}/ g(x) \leq y\}) \\
+    f_Y(y) = \frac{d}{dy}F_Y(y)
+\end{align*}
+E como $f_Y(y) = \frac{d}{dy}F_Y(y)$ se relaciona com $f_X(x)$?
+
+Consideremos uma caso particular mais simples:
+\\
+Considere uma v.a. $X$ de PDF conhecida $f_X$. Suponha que $g: \bb{R} \rightarrow \bb{R}$ é
+estritamente crescente e inversível. Nesse caso:
+\begin{align*}
+    F_Y(y) = P_X(\{x \in \bb{R}/ g(x) \leq y\}) = P_X((-\infty, g^{-1}(y)])
+\end{align*}
+
+Temos: $P_X((-\infty,x]) = F_X(x)$ e $P_X((-\infty,g^{-1}(y)]) = P_X(g^{-1}(y))$ paro caso
+inversível e estritamente crescente.
+
+Calculando a derivada e fazendo $h(y) = g^{-1}(y)$:
+\begin{align*}
+    f_Y(y) = \frac{d}{dy}F_Y(y) \\
+    F_Y(y) = F_X(h(y)) \\
+    f_Y(y) = F_X'(h(y)) \cdot h'(y) \\
+    f_Y(y) = f_X(h(y)) \cdot h'(y) \\
+    \text{lembrando que: } h'(y) = \frac{1}{g'(h(y))} \\
+    g(h(y)) = y \\
+    g'(h(y)) \cdot h'(y) = 1 \\
+    f_Y(y) = f_X(g^{-1}(y)) \cdot \frac{1}{g'(g^{-1}(y))} \\
+    \\
+    f_Y(y) = \frac{f_X(g^{-1}(y))}{g'(g^{-1}(y))}
+\end{align*}
+
+Sendo válida para $g$ inversível e que $g^{-1}(y) > 0 \; \forall \; y \in \bb{R}$
+
+\subsubsection*{Exercício:}
+Repita o problema considerando que $g$ é inversível e estritamente decrescente.
+
+
+\end{document}
