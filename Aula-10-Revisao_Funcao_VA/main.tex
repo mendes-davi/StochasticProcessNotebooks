@@ -1,0 +1,144 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\usepackage{minted}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.25em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{Breve Revisão}
+Considere uma v.a. $X \sim \mathscr{U}([-2,2))$. Considere ainda $g(x) = x^2, \; \forall x \in
+\bb{R}$. Qual o valor esperado de $Y = g(X)$? Qual a PDF de $Y = g(X)$ ?
+
+Temos:
+\begin{align*}
+    f_X(x)&=
+        \begin{cases}
+            \frac{1}{4}, \; \forall \; x \in [-2,2) \\
+            0, \text{ caso contrário}
+        \end{cases}
+        \\
+    f_Y(y)&=
+        \begin{cases}
+            0, \text{ se } x < 0 \\
+            0, \text{ se } x > 4 \\
+            \text{(?)}, \text{ se } 0 \leq x \leq 4 \\
+        \end{cases}
+        \\ \\
+    E(y) &= \int^\infty_{-\infty} y \cdot f_y(y)dy = \mcolor{blue}{\int^\infty_{-\infty} g(x) \cdot
+    f_X(x)dx} \\
+        E(y) &= \int^2_{-2} x^2 \cdot \frac{1}{4} dx = \frac{4}{3} \\[-1em]
+\end{align*}
+Para todo $y \in (0,4)$:
+
+$x_1 = - \sqrt{y} \text{ e } x_2 = \sqrt{y} \rightarrow x_1^2 = x_2^2 = y$
+\begin{align*}
+    f_Y(y) &= \sum_i \frac{f_X(x_i)}{|g'(x_i)|} = \frac{f_X(\sqrt{y})}{|2\sqrt{y}|} +
+    \frac{f_X(-\sqrt{y})}{|-2\sqrt{y}|}\\
+    f_Y(y) &= 2 \cdot \frac{0.25}{2\sqrt{y}} = \frac{0.25}{\sqrt{y}} \; \forall \; y \in (0,4) \\
+    f_Y(y)&=
+    \begin{cases}
+        0, \text{ se } x < 0 \\
+        0, \text{ se } x > 4 \\
+        \frac{0.25}{\sqrt{y}}, \text{ se } 0 \leq x \leq 4 \\
+    \end{cases}
+\end{align*}
+\\[-0.75em]
+\section{Um outro exercício para casa...}
+Considere $X$ uma variável aleatória com PDF $f_X$ e CDF $F_X(x)$. Considere ainda $U \sim
+\mathscr{U}([0,1))$. Defina $g:\bb{R} \rightarrow \bb{R}$ tal que $g(u) = F^{-1}(u)$ ($F$ é suposta
+inversível). Qual a PDF de $Y=g(U)$?
+
+\section{Observação sobre notação de Momentos de V.A.}
+Definimos o momento central de uma variável aleatória $X$ como sendo:
+\begin{align*}
+    M_C^n &= \int_{-\infty}^\infty (x - \mu)^n f_X(x)dx \\
+          &\text{Se definirmos } Y = g(X), \text{ com } g: \bb{R} \rightarrow \bb{R} \text{ é dado
+          por } g(x) = (x - \mu)^n \\ \\
+    E(y) &= \int^\infty_{-\infty} y \cdot f_y(y)dy = \mcolor{blue}{\int^\infty_{-\infty} g(x) \cdot
+    f_X(x)dx} \\ \\
+         &\text{Logo: } M_C^n = E((x - \mu)^n) \\
+         &\text{Da mesma forma: } M^n = E(X^n) \\ \\
+         &\text{Ademais, para a variância:} \\
+        \text{Var} &= \sigma^2 = \int^{\infty}_{-\infty} (x-\mu)^2 f_X(x)dx = E((x - \mu)^2)
+\end{align*}
+
+
+
+\end{document}
