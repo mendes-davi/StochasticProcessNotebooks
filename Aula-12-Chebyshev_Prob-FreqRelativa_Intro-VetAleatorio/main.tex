@@ -1,0 +1,156 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.25em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{A desigualdade de Chebyshev}
+\bf{Problema 4 - Lista 2:} Seja $X$ uma variável aleatória com valor esperado $\mu = E(X)$ e desvio
+padrão (suposto não nulo) $\sigma = \sqrt{\text{Var}(X)}$.
+
+A desigualdade de Chebyshev estabelece que
+\begin{align*}
+P(|X - \mu| \geq k \sigma) \leq \frac{1}{k^2}, \; \forall \; k > 0 \\
+\\
+| X - \mu | \geq k \sigma =
+\begin{cases}
+    X \geq \mu + k \sigma \\
+    X \leq \mu - k \sigma \\
+\end{cases} \\
+P(|X - \mu| \geq k \sigma) = P_X((-\infty, \mu-k\sigma] \cup (\mu+k\sigma, \infty]) \\[0.5em]
+\end{align*}
+\subsection*{A}
+$P(|X - \mu| \geq 2k \sigma) = \frac{1}{4}$
+
+\section{Probabilidade \& Frequência Relativa}
+
+Em um experimento de Bernoulli
+\begin{align*}
+    S = \{(C,C,\ldots,C), \ldots \} \text{ com } |S| = 2^n
+\end{align*}
+Uma variável aleatória $X(k)$ indica $k$ elementos iguais a $C$ em um resultado possível.  Com
+probabilidade $P(\{k\}) = {N \choose k} p^k (1-p)^{N-k}$
+
+Com base no valor esperado de X e na desigualdade de Chebyshev, forneça uma interpretação do conceito de probabilidade em termos de frequência relativa.
+
+Usando a resposta do \bf{Problema 2} para o valor esperado de uma V.A. binomial é $\bb{E}(X) = Np$
+e Var$(X) = Np(1-p)$, $\mu = \sqrt{Np(1-p)}$
+\begin{align*}
+P(|X - \mu| \geq j \sigma) \leq \frac{1}{j^2}, \; \forall \; j > 0 \\
+P(|X - Np| \geq j \sqrt{Np(1-p)}) \leq \frac{1}{j^2} \\[-1em]
+\end{align*}
+Definindo $Y = \frac{X}{N}$ (uma v.a.) como uma medida de frequência relativa para uma proporção de
+ocorrências do evento desejado.
+
+Avaliando o valor esperado $\bb{E}(Y) = \frac{Np}{N} = p$ e Var$(Y) = \frac{Var(X)}{N^2} = \frac{p(1-p)}{N}$, $\sigma_Y = \sqrt{\frac{p(1-p)}{N}}$.
+
+Finalmente, aplicando esse valores a desigualdade de Chebyshev.
+
+\begin{align*}
+    P(|Y - p| \geq j \sqrt{\frac{p(1-p)}{N}}) \leq \frac{1}{j^2} \\
+    tol = j \sqrt{\frac{p(1-p)}{N}} \\
+    j^2 = tol^2 \frac{N}{p(1-p)} \\
+    \\
+    P(|Y - p| \geq tol) \leq \frac{p(1-p)}{N tol^2}
+\end{align*}
+
+A probabilidade de que a freq. relativa desvie acima de uma tol. em relação à probabilidade teórica
+de acerto tem um limite superior que cai linearmente com o número de realizações N.
+
+\section{Vetores Aleatórios - Introdução}
+Vetor que representa várias medidas (eg. amostras de um sinal) de um sistema. \bf{Não definir
+vetor aleatório como:} uma lista de variáveis aleatórias.
+
+Definição: Uma função $X: S \rightarrow \mathbb{R}^n$, portanto função que associa um resultado de
+um experimento a um vetor numérico. Um vetor aleatório é um tipo de processo estocástico em tempo
+discreto e duração finita. [tempo é o índice que define a posição em um vetor de $\mathbb{R}^n$]
+
+Em função disso, podemos definir:
+\begin{itemize}
+    \item A PDF conjunta de um vetor
+    \item A CDF conjunta de um vetor
+    \item A dependência ou independência entre amostras do vetor
+    \item A covariância entre componentes
+    \item A correlação entre componentes
+    \item A matriz de covariâncias
+    \item A matriz de dependências
+\end{itemize}
+
+\end{document}
