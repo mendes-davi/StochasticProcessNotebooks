@@ -1,0 +1,177 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.25em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{Vetores Aleatórios - PDF Conjunta}
+Lembrando do caso de uma variável aleatória no qual:
+\begin{align*}
+    &\int^{b}_{a} f_X(x)dx = P_X((a,b]) \\ \\
+    &\text{Para 3 variáveis:} \\
+    &\int \int \int_{V} f_X(x_1,x_2,x_3) d x_1 d x_2 d x_3 = P_X(V), \\
+    &\text{no qual V é um conjunto de pontos em } \mathbb{R}^3
+.\end{align*}
+\\[0.5em]
+Para definirmos formalmente a PDF precisamos do conceito de CDF.
+
+\subsection{CDF de um Vetor Aleatório}
+Podemos fazer:
+\begin{align*}
+    F_X(x_1,x_2,x_3,\ldots,x_N) = P_X((-\infty,x_1] \times (-\infty,x_2] \times \ldots
+    (-\infty,x_N]) \\
+    \text{com a expansão para: } \{1,2\} \times \{3,4\} = \{(1,3), (1,4), (2,3), (2,4)\} \\
+    \text{o operador $\times$ é o produto cartesiano}
+\end{align*}
+
+\subsection{Definição da PDF Conjunta}
+É a função obtida pela derivação parcial da CDF com respeito a todas as componentes do vetor. No
+exemplo em que $F_X(x_1,x_2)=P_X(A)$, temos $f_X(x_1,x_2) = \frac{\partial^{2}}{\partial x_1
+x_2}F_X(x_1,x_2)$.
+\begin{align*}
+    f_X(x_1, x_2, \ldots, x_N) = \frac{\partial^{N}}{\partial x_1 \partial x_2 \ldots \partial x_N
+    }F_X(x_1, x_2, \ldots, x_N)
+.\end{align*}
+\\
+\section{PDF Marginal de um Vetor Aleatório}
+Considere um vetor aleatório $X$ de $N$ componentes. Considere ainda uma função $g: \mathbb{R}^N
+\to \mathbb{R}$, tal que $g(x)$ é i-ésima componente de $X$, com $1 \leq i \leq N$ com $i$
+inteiro.
+
+Temos uma variável aleatória $Y = g(X)$, definido por $Y(s) = g(X(s))$. A PDF de $X$ com respeito a
+i-ésima componente é definida como a PDF de $Y$. Denominada PDF Marginal de $X$ na i-ésima
+componente.
+
+\bf{Pergunta:} se temos a PDF conjunta de $X$, como calcularmos a PDF marginal com respeito à
+i-ésima componente?
+\begin{align*}
+    f_{X_i}(x_i) = \underbrace{\int \int}_{N-1 \text{ integrais}} f_X(x_1, x_2, \ldots, x_N)
+    \underbrace{d x_2 d x_{i-1} d x_{i+1} d x_{i+2} d x_N}_{dx_j \; \forall j \in \{1,\ldots,N\} -
+\{i\}}
+.\end{align*}
+
+Extensão do conceito da PDF Marginal para m componentes do vetor $X$ difere em definirmos a
+seguinte função de vetor aleatório:
+\begin{align*}
+    g: \mathbb{R}^{N} \to \mathbb{R}^{m}, m \le N,
+.\end{align*}
+com g(x) o vetor formado pelas $m$ componentes escolhidas de $Y  = g(X)$ é um vetor aleatório
+de $m$ componentes.
+
+A PDF conjunta de $Y$ é uma PDF Marginal de $X$:
+\begin{align*}
+    f_{X_1, X_2, \ldots, X_M}(x_1, x_2, x_3, \ldots, x_m) = \underbrace{\int \int}_{N-m \text{
+    integrais}} f_X(x_1, x_2, \ldots, x_N) \underbrace{d x_2 d x_{i-1} d x_{i+1} d x_{i+2} d x_N}_{\text{N-m componentes de
+    integração}}
+.\end{align*}
+
+\bf{Observação:} Sabendo a PDF conjunta de um vetor, conseguimos calcular a PDF marginal com
+respeito a quaisquer grupo de componentes (integrando com respeito a todos os outros
+componentes). O contrário nem sempre é possível (calcular a conjunta a partir de marginais).
+\\[0.5em]
+\subsection*{Breve Exemplo}
+Considere $X$ um vetor aleatório $X: S \to \mathbb{R}^{2}$ e $f_x(x_1, x_2) = x_1 + x_1 x_2, \forall
+x_1, x_2 \in \mathbb{R}^2$ tais que $0 \le x_1 \le \frac{1}{2}, 0 \le x_2 \le K$, com $K \in
+\mathbb{R}$ e $f_X(x_1, x_2) = 0$, caso contrário.
+
+\bf{Ponto Inicial:} Determinar o valor de $K$ para definir a PDF Conjunta.
+
+\paragraph{A} Qual a PDF Marginal de $X_1$?
+\\
+Integrar $X_2$ de $0 \to K$
+
+\paragraph{B} Qual a PDF Marginal de $X_2$?
+\\
+Integrar $X_1$ de $0 \to 0.5$
+
+\paragraph{C} Qual a probabilidade de $X_1 > X_2$?
+\\
+Considerar a região total em que $X_1 > X_2$ (região abaixo da reta $y=x$) e integrar para obter
+probabilidade.
+
+\paragraph{D} Qual a probabilidade de $X_2$ estar entre $\frac{K}{2}$ e $K$?
+\\
+É possível usar a PDF marginal nesse caso.
+
+\paragraph{E} $X_1 \text{ e } X_2$ são dependentes ou independentes?
+\\
+Essa é \it{spoiler} de aulas posteriores.
+
+\end{document}
