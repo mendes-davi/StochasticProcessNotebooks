@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.25em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{Covariância \& Correlação}
+Seja $X \in S \to \mathbb{R}^N$ um vetor aleatório e sejam $i,j \in \{1,2,3,\ldots,N\}$ com $i \neq
+j$. A covariância entre as componentes $i$ e $j$ é definida por
+\begin{align*}
+    Cov(X_i,X_j) = \int^{\infty}_{-\infty} \int^{\infty}_{-\infty} (x_i-\mu_i)\cdot(x_j-\mu_j)^* \cdot f_{X_i X_j}(x_i,x_j) dx_i dx_j
+\end{align*}
+onde $f_{X_i X_j}(x_i,x_j)$ é a PDF marginal das duas componentes e $\mu_i, \mu_j$ são as
+expectâncias respectivas das 2 componentes.
+
+A covariância visa observar como o comportamento estatístico de uma componente $X_i$ afeta o
+comportamento de $X_j$. Uma covariância positiva significa que o aumento de uma das variáveis em
+relação a sua média individual \textit{aumenta} a expectativa de que a outra variável também
+cresça em relação a sua média individual. Uma covariância negativa significa que o aumento
+\textit{aumenta} a expectativa de uma redução em outra variável. Finalmente, uma covariância nula
+mostra que o aumento de uma variável em relação a sua média não altera a expectativa de que outra
+variável aumente ou diminua. \textbf{Mas pode haver outro tipo de dependência!}
+
+\textbf{Observação:} $X_1, X_2$ independentes $\to$ covariância nula. $X_1, X_2$ com covariância
+nula não implica em independência!
+\vspace{0.25em}
+\subsection{Estimando Covariância}
+Considere que temos $M$ realizações de $X_i, X_j$. A partir dessas realizações temos um estimador
+(unbiased) da covariância.
+
+O estimador pode ser tratado como uma nova variável aleatória na qual o valor esperado coincide com
+o valor teórico da covariância. \textit{Estamos aproximando a covariância com uma margem de erro!
+(Dica de leitura [livro]: Kay, Statistical Signal Processing)}
+\begin{align*}
+    \ov{Cov_{X_i,X_j}} &= \frac{1}{M-1} \sum_{n=1}^M
+    (x_i^{(n)}-\ov{\mu_i})\cdot(x_j^{(n)}\ov{\mu_j})^* \\
+    \text{com } \ov{\mu_i} &= \sum_{n=1}^M x_i^{(n)} \qquad \ov{\mu_j} = \sum_{n=1}^M x_j^{(n)}
+\end{align*}
+
+\paragraph*{Definição:}
+$X_i$ e $X_j$ são não-correlatos se e somente se $Cov_{X_i,X_j} = 0$. \textit{Não confundir com
+correlação!}
+
+\section{Correlação}
+Correlação entre $X_i$ e $X_j$ é $R(X_i,X_j)$.
+\begin{align*}
+    R(X_i,X_j) = \int^{\infty}_{-\infty} \int^{\infty}_{-\infty} x_i \cdot x_j^* \cdot f_{X_i X_j}(x_i,x_j) dx_i dx_j
+\end{align*}
+O interesse por essa grandeza: $Cov(X_i,X_j) = R(X_i,X_j) - \mu_i \cdot \mu_j^*$.
+\\
+Lembrando que $Var[X_i] = \mathbb{E}[X_i^2] - (\mu_i)^2$. \textbf{Observação:} $R(X_i,X_j) =
+\mathbb{E}(X_iX_j^*)$.
+\\
+Para $Cov(X_i,X_j) = 0$, a correlação torna-se o produto das
+médias.
+
+
+
+
+
+\end{document}
