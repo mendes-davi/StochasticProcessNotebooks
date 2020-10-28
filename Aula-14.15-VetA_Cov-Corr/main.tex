@@ -123,16 +123,76 @@ Correlação entre $X_i$ e $X_j$ é $R(X_i,X_j)$.
 \begin{align*}
     R(X_i,X_j) = \int^{\infty}_{-\infty} \int^{\infty}_{-\infty} x_i \cdot x_j^* \cdot f_{X_i X_j}(x_i,x_j) dx_i dx_j
 \end{align*}
-O interesse por essa grandeza: $Cov(X_i,X_j) = R(X_i,X_j) - \mu_i \cdot \mu_j^*$.
+O interesse por essa grandeza: $Cov(X_i,X_j) = R(X_i,X_j) - \mu_i \cdot \mu_j^*$
 \\
-Lembrando que $Var[X_i] = \mathbb{E}[X_i^2] - (\mu_i)^2$. \textbf{Observação:} $R(X_i,X_j) =
-\mathbb{E}(X_iX_j^*)$.
+Lembrando que $Var[X_i] = \mathbb{E}[X_i^2] - (\mu_i)^2$. \textbf{Observação:} $R(X_i,X_j) = \mathbb{E}(X_iX_j^*)$
 \\
 Para $Cov(X_i,X_j) = 0$, a correlação torna-se o produto das
 médias.
 
+\section{Matrizes de Covariância e Correlação}
+Seja $X \in S \to \mathbb{R}^N$ um vetor aleatório e sejam $X_i, X_j$ duas componentes, podemos
+obter a correlação e a covariância:
+\begin{align*}
+    R(X_i,X_j), \; Cov(X_i,X_j)
+\end{align*}
 
+Considerando esses valores para todas combinações de $i, j$ dentro do vetor, podemos calcular
+$N^2$ correlações e $N^2$ covariâncias e organizar em duas matrizes:
+\begin{align*}
+    \mathbf{R_{XX}} &= \text{ Matriz de autocorrelação} \\
+    &\mathbb{E}[|X_1|^2] \quad\;\; \mathbb{E}[X_1X_2^*] \qquad\;\; \mathbb{E}[X_1X_3^*] \ldots\;
+    \mathbb{E}[X_1X_N^*] \\
+    &\mathbb{E}[X_2X_1^*] \quad\; \mathbb{E}[|X_2|^2] \qquad\;\;\; \mathbb{E}[X_2X_3^*] \ldots\;
+    \mathbb{E}[X_2X_N^*] \\
+    &\mathbb{E}[X_NX_1^*] \quad \mathbb{E}[|X_NX_2|^2] \quad\; \mathbb{E}[X_NX_3^*] \ldots \mathbb{E}[X_NX_N^*]
+\end{align*}
 
+\vspace{-2.75em}
+\begin{align*}
+&\mathbf{C_{XX}} = \text{ Matriz de autocovariância} & & &\\
+&\sigma_1^2 \mathbb{E}[(X_1-\mu_1)(X_2-\mu_2)^*] \mathbb{E}[(X_1-\mu_1)(X_3-\mu_3)^*] \ldots
+\mathbb{E}[(X_1-\mu_1)(X_N-\mu_N)^*] \\
+&\mathbb{E}[(X_2-\mu_2)(X_1-\mu_1)^*] \sigma_2^2 \mathbb{E}[(X_2-\mu_2)(X_3-\mu_3)^*] \ldots
+\mathbb{E}[(X_2-\mu_2)(X_N-\mu_N)^*] \\
+&\mathbb{E}[(X_N-\mu_N)(X_1-\mu_1)^*] \mathbb{E}[|(X_N-\mu_N)(X_2-\mu_2)|^2]
+\mathbb{E}[(X_N-\mu_N)(X_3-\mu_3)^*] \ldots \sigma_N^2
+\end{align*}
 
+\vspace{-0.75em}
+\bf{Observação:} para matriz de autocovariância
+     Simétrica no caso real (parte imaginária núla)
+     \\
+     Hermitiana sempre (é igual a Hermitiana dela própria)
+     \\
+     Positiva semidefinida \it{(positive semidefinite)} "$\to n \ge 0$" (autovalores reais
+        não-negativos)
+        \\
+     É positiva definida desde que não haja componentes com variância nula (autovalores são
+        reais positivos)
+
+\subsection{Notação Matricial}
+Para matriz de correlação: $R_{XX} = \mathbb{E}[X \cdot X^H]$, valor esperado de uma matriz aleatória.
+
+Para matriz de covariância:
+\begin{align*}
+    C_{XX} &= \mathbb{E}[(X-\mu_X)(X-\mu_X)^H] \\
+    C_{XX} &= \mathbb{E}[(X-\mu_X)(X^H-\mu_X^H)] \\
+    C_{XX} &= \mathbb{E}[XX^H - X\mu_X^H - \mu_XX^H + \mu_X\mu_X^H] \\
+    C_{XX} &= R_{XX} - \mathbb{E}[X\mu_X^H] - \mathbb{E}[\mu_XX^H] + \mu_X\mu_X^H \\
+    C_{XX} &= R_{XX} - \mathbb{E}[X]\mu_X^H - \mu_X\mathbb{E}[X^H] + \mu_X\mu_X^H \\
+    C_{XX} &= R_{XX} - \mu_X\mu_X^H - \mu_X\mu_X^H + \mu_X\mu_X^H \\
+    C_{XX} &= R_{XX} - \mu_X\mu_X^H \qquad \text{ uma generalização de: } Var[X] =
+    \mathbb{E}[X^2] - (\mathbb{E}[X])^2 \\[-2.5em]
+\end{align*}
+\subsection{Estimador da matriz de covariância}
+Considere um vetor aleatório $X \in S \to \mathbb{R}^N$. Suponha que temos $M$ realizações de $X$
+sendo: $X^{(1)}, X^{(2)}, X^{(3)} \ldots, X^{(N)}$. Como estimar a matriz de covariância de $C_{XX}$?
+\\
+Defina uma matriz de dados $D_{[N \times M]}$ em que cada coluna é uma realização $X^{(i)}$. Com
+isso, estimamos o vetor média $\mu_X$ somando ao longo das linhas e dividindo por $M$. Realizamos
+a subtração de $D$ pelo valor médio correspondente a cada coluna obtendo $D_{\mu}$.
+\\
+Para obter a estimativa $\ov{C_{XX}}$, fazemos $\ov{C_{XX}}_{[N \times N]} = D_{\mu} D_{\mu}^H$.
 
 \end{document}
