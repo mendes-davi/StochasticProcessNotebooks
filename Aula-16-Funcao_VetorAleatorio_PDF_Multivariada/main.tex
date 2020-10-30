@@ -1,0 +1,186 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.25em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\renewcommand\u[1]{\underbar{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{Transformadas Lineares de Vetores Aleatórios}
+Considere o seguinte problema: temos um vetor $X$ com matriz de covariâncias $C_{XX}$ e queremos
+definir uma função $g$ tal que $Y = g(X)$ tenha uma matriz de covariâncias diagonal. \it{Isso
+significa componentes não-correlatos mas não garante independência.}
+
+Dois aspectos:
+\begin{itemize}
+    \item Este problema tem solução em forma fechada;
+    \item A solução é uma transformação linear;
+\end{itemize}
+
+Questiona-se o que acontece com uma matriz de covariâncias se aplicarmos uma transformada linear a
+$X$. Temos um vetor aleatório $X \in S \to \mathbb{C}^N$. Temos uma matriz determinística $A$ e
+definimos:
+\begin{align*}
+    &Y = A X \\
+      &\text{Note que Y é um vetor aleatório:} \\
+      &Y(s) = A X(s) \\
+         &\text{Qual a matrix de covariâncias } C_{YY}?
+\end{align*}
+\bf{Obs:} Se $X$ é variável aleatória com variância $\sigma_X^2$. Se $Y = aX$, $\sigma_Y^2 = a^2
+\cdot \sigma_X^2$
+
+Solução:
+\begin{align*}
+    C_{YY} &= \mathbb{E}[(Y-\mu_Y)(Y-\mu_Y)^H] \\
+    C_{YY} &= \mathbb{E}[(AX-\mu_Y)(AX-\mu_Y)^H] \\
+    C_{YY} &= \mathbb{E}[(AX-\mu_Y)(AX-\mu_Y)^H] \\
+    \mu_Y &= \mathbb{E}[Y] = \mathbb{E}[AX] = A\mu_X \\
+    C_{YY} &= \mathbb{E}[(AX-A\mu_X)(AX-A\mu_X)^H] \\
+    C_{YY} &= \mathbb{E}[(A(X-\mu_X))(A(X-\mu_X))^H] \\
+    \text{lembrando que: } (AB)^T &= A^TB \text{ e que também } (AB)^H = A^HB \\
+    C_{YY} &= \mathbb{E}[A(X-\mu_X)(X-\mu_X)^HA^H] \\
+    C_{YY} &= A\mathbb{E}[(X-\mu_X)(X-\mu_X)^H]A^H \\
+    C_{YY} &= AC_{XX}A^H \\
+    \text{no caso real: } C_{YY} &= AC_{XX}A^T \\
+    \text{no caso 1D: } \sigma_Y^2 &= a \cdot \sigma_X^2 \cdot a^* = |a|^2 \sigma_X^2
+\end{align*}
+
+\subsection{Desafio - Diagonalizando $C_{XX}$}
+Calcule $A$ para que $C_{XX}$ seja matriz diagonal.
+
+\section{Funções de Vetores Aleatórios}
+Considere um vetor aleatório $X \in S \to \mathbb{R}^N$. Seja uma função $g: \mathbb{R}^N \to
+\mathbb{R}^N$ e defina o vetor aleatório $Y \in S \to \mathbb{R}^N$ a partir de $Y(s) = g(X(s))$.
+
+Qual a PDF de $Y$ dada a PDF de $X$?
+
+Lembrando o caso de variáveis aleatórias: $Y = g(X)$, para cada $y \in \mathbb{R}$ consideramos
+$x_i$ tais que $g(x_i) = y$ e obtivemos:
+\begin{align*}
+    f_Y(y) &= \sum_i \frac{f_X(x_i)}{|g'(x_i)|}
+\end{align*}
+
+No caso de vetores aleatórios:
+Para um dado $y \in \mathbb{R}^N$, considerar todos os $x_i \in \mathbb{R}^N$ com $g(x_i) = y$.
+\it{A função $g$ recebe um vetor de entrada e retorna um vetor de $g_N$ componentes.}
+
+A derivada será substituida pelo Jacobiano de $g$:
+\begin{align*}
+    \mathrm{J}_g(f)&=\left.\begin{bmatrix}\frac{\partial f_1}{\partial x_1}&\frac{\partial f_1}{\partial x_2}&\dots&\frac{\partial f_1}{\partial x_n}\\\frac{\partial f_2}{\partial x_1}&\frac{\partial f_2}{\partial x_2}&\dots&\frac{\partial f_2}{\partial x_n}\\
+\vdots&\vdots&&\vdots\\\frac{\partial f_m}{\partial x_1}&\frac{\partial f_m}{\partial
+x_2}&\dots&\frac{\partial f_m}{\partial x_n}\\\end{bmatrix}\right|_x \\
+\
+            f_Y(y) &= \sum_i \frac{f_X(x_i)}{|det \; J_g(x_i)|}
+\end{align*}
+
+\subsection{Exercício}
+Seja $X \in S \to \mathbb{C}^N$ um vetor aleatório com PDF conjunta $f_X$. Seja ainda $A$ uma
+matriz $N \times N$. Determine a PDF conjunta de $Y = AX$. Considere que $A$ é não singular ($det
+\; A \neq 0$).
+
+\section{Exemplo de PDF multivariada}
+PDF Gaussiana no caso monovariado:
+\begin{align*}
+f_X(x) &= \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left({-\frac{(x-\mu)^2}{2\sigma^2}}\right)
+\end{align*}
+No caso multivariado:
+\begin{align*}
+    f_X(\u{x}) &= \frac{1}{\sqrt{(2\pi)^N det(C_{\u{x}})}} \exp\left({-\frac{1}{2} (\u{x}-\mu_{\u{x}})^T C_{XX}^{-1}(\u{x}-\mu_{\u{x}})}\right) \\
+    \text{Exemplo } N &= 2, \\
+    C_{XX} &=
+    \begin{bmatrix}
+        \sigma^1_1 & c\\
+        c & \sigma^2_2
+    \end{bmatrix} \qquad
+    C_{XX}^{-1} = \frac{1}{\sigma_1^1 \cdot \sigma_2^2 - c^2}
+    \begin{bmatrix}
+        \sigma^1_1 & c\\
+        c & \sigma^2_2
+    \end{bmatrix} \\
+    f_X(\u{x}) &= \frac{1}{\sqrt{(2 \pi)^2 \cdot (\sigma_1^1 \cdot \sigma_2^2 - c^2)}}
+    exp\left({-\frac{1}{2} (\u{x}-\mu_{\u{x}})^T \frac{1}{\sigma_1^1 \cdot \sigma_2^2 - c^2}
+        \begin{bmatrix}
+            \sigma^1_1 & c\\
+            c & \sigma^2_2
+        \end{bmatrix}
+    (\u{x}-\mu_{\u{x}})}\right)
+\end{align*}
+
+
+\end{document}
