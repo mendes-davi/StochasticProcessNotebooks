@@ -1,0 +1,188 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.25em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\renewcommand\u[1]{\underbar{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{Autovalores e Autovetores}
+Dada uma matriz $M_{N \times N}$ um autovetor de $M_{N \times N}$ é um vetor \bf{não-nulo} $v$ tal
+que:
+\begin{align*}
+    M v = \lambda v, \text{ com } \lambda \in \mathbb{C}
+\end{align*}
+
+Se v é um autovetor, então $\alpha v$ é um autovetor $\forall \alpha \in \mathbb{C}, $ com $\alpha
+\neq 0$.
+\begin{align*}
+    M(\alpha v) &= \alpha (Mv), \text{ se $\alpha$ é escalar} \\
+    \text{Se v é autovetor, } Mv &= \lambda v \\
+    M(\alpha v) &= \alpha (Mv) = \lambda (\alpha v), \text{ logo }
+\end{align*}
+
+Se $\lambda$ é autovalor, $\alpha \lambda$ não necessariamente é  autovalor.
+
+Dada a matriz $M$, como calcular os autovalores e autovetores?
+\begin{align*}
+    M v &= \lambda v, \text{ com } v \neq 0 \\
+    M v &= I (\lambda v) = \lambda (I v) \\
+    (M - \lambda I) v &= 0
+\end{align*}
+
+Concluímos que $\det(M-\lambda I) = 0$. Caso não fosse nulo seria possível obter uma inversa $Q$
+para $M -\lambda I$, o que conduziria a $v = Q = 0$, isso não pode ocorrer já que $v$ é autovetor e
+não nulo.
+
+$\det(M-\lambda I) = 0$ é polinômio de N-ésimo grau em N. Há N raízes, podendo haver raízes com
+multiplicidade maior que 1. \textit{Existem N autovalores, podendo alguns serem repetidos.}
+
+Para acharmos os autovetores correspondentes a $\lambda_i$:
+\begin{align*}
+    M v &= \lambda_i v \\
+    (M - \lambda_i I)v &= 0
+\end{align*}
+
+Sistema de N equações, linear e homogêneo. \textit{Dica: Colocar valor (unitário) em uma posição e solucionar.}
+
+\section{Decomposição Espectral}
+\textbf{Teorema:} Seja $M_{N \times N}$, com autovetores $v_1, v_2, \ldots, v_N$ linearmente
+independentes (a garantia de existência de $N$ autovetores pode ser demonstrada). Sejam
+$\lambda_1,\lambda_2$ os autovalores correspondentes. Finalmente, defina $V$:
+
+\begin{align*}
+    V_{N \times N} &=
+    \begin{bmatrix}
+        v_1 & v_2 & v_3 & \ldots & v_N
+    \end{bmatrix} \\
+    L_{N \times N} &=
+    \begin{bmatrix}
+        \lambda_k
+    \end{bmatrix} \text{se i=j, c.c 0 (autovalores na diagonal)}
+\end{align*}
+
+Então:
+\begin{align*}
+    M = V L V^{-1}
+\end{align*}
+Note que $V$ é inversível já que tem colunas independentes.
+
+\textbf{Observação}: Se $M$ é hermitiana e positiva definida, $V$ será matriz unitária
+("ortonormal"). Isso é bastante cômodo! Logo: $V^H = V^{-1}$, se $M$ é hermitiana e positiva
+definida.
+
+\section{Transformada de Karhunen-Loève}
+Acrônimo de KLT e também conhecida como Análise de componentes principais (PCA) para o campo da
+estatística.
+
+Temos um vetor aleatório $X$ (sinal estocástico em tempo discreto), com matriz de autocov.
+$C_{XX}$. Queremos encontrar uma transformada $T$ tal que $Y = TX$, é um vetor aleatório
+(transformada de X) tal que: $C_{YY}$ é matriz diagonal. Depois, fazer $W = AX$ tal que $C_{WW}$
+seja a matriz identidade.
+\begin{align*}
+    Y &= TX \to C_{YY} = T C_{XX} T^H \\
+    \text{Sabemos que } C_{XX} &= VLV^{-1}, \textbf{ positiva definida} \\
+    V_{N \times N} &=
+    \begin{bmatrix}
+        v_1 & v_2 & v_3 & \ldots & v_N
+    \end{bmatrix} \quad
+    L_{N \times N} =
+    \begin{bmatrix}
+        \lambda_k
+    \end{bmatrix} \text{se i=j, c.c 0 (autovalores na diagonal)} \\
+    C_{YY} &= T V L V^{-1} T^H = T V L V^H T^H, \text{ fazendo } T = V^H \\
+    C_{YY} &= V^H V L V^H V, \text{ mas } V^H = V^{-1} \\
+    C_{YY} &= (V^{-1}V) L (V^{-1}V) = I L I = L \\
+\end{align*}
+Fazendo $W = AX$, tal que $C_{WW} = I$.
+\begin{align*}
+    C_{WW} &= A C_{XX} A^H \\
+    C_{XX} &= VLV^{-1} = VLV^H \\
+    C_{WW} &= AVLV^HA^H \\
+    A &= (V \sqrt{L})^{-1} \\
+    C_{WW} &= (V\sqrt{L})^{-1}VLV^H((V\sqrt{L})^{-1})^H \\
+    C_{WW} &= (\sqrt{L})^{-1} V^{-1} V L V^H ((\sqrt{L})^{-1} V^{-1})^H \\
+    C_{WW} &= (\sqrt{L})^{-1} V^{-1} V L V^H (V^{-1})^H ((\sqrt{L})^{-1})^H \\
+    C_{WW} &= (\sqrt{L})^{-1} V^{-1} V L V^{-1} V ((\sqrt{L})^{-1})^H \\
+    C_{WW} &= (\sqrt{L})^{-1} L (\sqrt{L})^{-1} \\
+    C_{WW} &= (\sqrt{L})^{-1} \sqrt{L}\sqrt{L} (\sqrt{L})^{-1} \\
+    C_{WW} &= I
+\end{align*}
+
+\end{document}
