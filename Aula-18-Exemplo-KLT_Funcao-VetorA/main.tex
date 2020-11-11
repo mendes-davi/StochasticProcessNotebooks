@@ -1,0 +1,248 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{minted}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.25em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\renewcommand\u[1]{\underbar{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{Exercício: Soma de duas variáveis aleatórias}
+Seja $X \in S \to \mathbb{R}$ um vetor aleatório. Considere que as componentes $X_1$ e $X_2$ são
+independentes, e que têm PDFs marginais dadas por $f_{X_1}, f_{X_2}$. Calcule a PDF da variável
+aleatória dada por $Y = X_1 + X_2$. Note que temos $Y = g(X)$ com $g: \mathbb{R}^2 \to
+\mathbb{R}^2$ dado por $g(x_1,x_2) = x_1 + x_2$.
+
+\paragraph*{Solução:}
+Seja $h: \mathbb{R}^2 \to \mathbb{R}^2$ dado por:
+\begin{align*}
+    h(x_1, x_2) &=
+    \begin{bmatrix}
+        x_1 + x_2 \\ x_2
+    \end{bmatrix}
+\end{align*}
+
+Seja ainda $\mathbf{w} \in \mathbb{R}^2$, podemos calcular a PDF de $W$ no ponto $\mathbf{w}$, usando
+o teorema da PDF de uma função de vetor aleatório.
+\begin{align*}
+    f_W(\mathbf{w}) = \sum_i \frac{f_X(x^{(i)})}{|\det J_h(x^{(i)})|}, \text{ com } \{x^{(1)},
+    x^{(2)}, \ldots \}\\
+    \text{ o conjunto de todos os vetores } x^{(i)} \text{ tais que } h(x^{(i)}) = \mathbf{w}
+\end{align*}
+
+Calculando a matriz jacobiana:
+\begin{align*}
+    \det J_h &=
+    \begin{bmatrix}
+        \frac{\partial h_1(x_1,x_2)}{\partial x_1} & \frac{\partial h_1(x_1,x_2)}{\partial x_2} \\
+        \frac{\partial h_1(x_1,x_2)}{\partial x_1} & \frac{\partial h_1(x_1,x_2)}{\partial x_2}
+    \end{bmatrix} =
+    \begin{bmatrix}
+        1 & 1 \\
+        1 & 0 \\
+    \end{bmatrix} \\
+    |\det J_h(x)| &= 1
+\end{align*}
+
+Logo:
+\begin{align*}
+    f_W(\mathbf{w}) &= f_X(w_2, y-w_2) \\
+           &\text{Note que Y é a primeira componente de W. Logo:} \\
+    f_Y(y) &= \int_{-\infty}^{\infty} f_X(w_2, y-w_2), \text{ resposta geral para qualquer vetor X} \\
+           &\text{Como o vetor X é independente:} \\
+    f_X(w_2, y-w_2) &= f_{X_1}(w_2) \cdot f_{X_2}(y-w_2) \\
+    f_Y(y) &= \int_{-\infty}^{\infty} f_{X_1}(w_2) \cdot f_{X_2}(y-w_2) dw_2 \\
+           &\text{Concluindo que a soma de duas VAs independentes é a convolução das PDFs originais!}
+\end{align*}
+
+\newpage
+\section{Aplicação Prática - Vetores Gaussianos}
+Construímos um vetor aleatório $X \in S \to \mathbb{R}^N$ com distribuição
+normal. Considerando que $X$ é não-correlato, a matriz $C_{XX}$ será
+diagonal.
+
+\begin{align*}
+    f_X(\u{x}) &= \frac{1}{\sqrt{(2 \pi)^2 \cdot (\sigma_1^1 \cdot
+    \sigma_2^2)}} \cdot
+    \exp\left({-\frac{1}{2} (\u{x}-\mu_{\u{x}})^T \frac{1}{\sigma_1^1 \cdot
+    \sigma_2^2}
+    \begin{bmatrix}
+        \sigma^1_2 & 0\\
+        0 & \sigma^2_1
+    \end{bmatrix}
+    (\u{x}-\mu_{\u{x}})}\right) \\
+    f_X(x_1,x_2) &= \frac{1}{\sqrt{2\pi\cdot\sigma_1^2}} \cdot
+    \frac{1}{\sqrt{2\pi\cdot\sigma_2^2}} \cdot
+    \exp\left(-\frac{1}{2}
+        \begin{bmatrix} x_1-\mu_1 \\ x_2-\mu_2 \end{bmatrix}
+        \frac{1}{\sigma_1^1 \cdot \sigma_2^2}
+        \begin{bmatrix} \sigma^1_2 & 0\\ 0 & \sigma^2_1 \end{bmatrix}
+        \begin{bmatrix} x_1-\mu_1 & x_2-\mu_2 \end{bmatrix} \right)
+        \\
+        \text{adiante: } f_X(x_1,x_2) &= f_X(x_1) \cdot f_X(x_2)
+\end{align*}
+
+Algumas conclusões que podem ser obtidas:
+\\
+Note que se um vetor aleatório gaussiano com 2 componentes é não-correlato
+então é independente. \textit{Vimos que a PDF é separável para a Gaussiana}.
+\textbf{Isso não vale, em geral, para outras distribuições!}
+
+Ademais, podemos notar outras propriedades como:
+\begin{itemize}
+    \item Se um vetor aleatório é gaussiano, as componentes são gaussianas.
+    \item Se um vetor aleatório $X \in S \to \mathbb{R}^N$ é gaussiano
+        não-correlato, ele é independente.
+    \item Se um vetor aleatório é gaussiano, a PDF é completamente determinada
+        por pelo vetor média e matriz de covariâncias.
+    \item A transformada de Fourier de uma PDF gaussiana é um gaussiana. No
+        caso monovariado, variâncias maiores na PDF original em variâncias
+        menores na transformada de Fourier.
+\end{itemize}
+
+\subsection{Exemplo Computacional}
+Construir vetores aleatório com covariâncias não diagonal a princípio e obter
+as estimativas para mostrar a transformada KLT para obter uma matriz de
+covariâncias diagonal.
+
+\begin{minted}[breaklines, linenos]{matlab}
+clear all; close all; clc;
+
+% Para caso bidimensional,
+N = 2;
+Cxx = [1 0; 0 1];
+mu = [0; 0];
+
+x1 = linspace(-3*sqrt(Cxx(1,1)), 3*sqrt(Cxx(1,1)), 100);
+x2 = linspace(-3*sqrt(Cxx(2,2)), 3*sqrt(Cxx(2,2)), 100);
+[X1, X2] = meshgrid(x1, x2);
+tpdf = zeros(size(X1));
+
+for i = 1:size(X1, 1)
+    for j = 1:size(X1, 2)
+        x = [X1(i,j); X2(i,j)];
+        tpdf(i, j) = 1/sqrt((2*pi)^N * det(Cxx)) * exp(-0.5 * (x-mu).' *
+        inv(Cxx) * (x-mu));
+    end
+end
+
+surf(X1, X2, tpdf)
+
+% Em dimensão superior,
+N = 5; % dimensão
+M = 10000; % numero de realizações
+x = randn(N, M); % cada coluna é uma realização
+A = [1 2 3 4 5; 2 3 4 5 6; 3 4 5 6 7; 4 5 6 7 8; 5 6 7 8 9];
+
+% Aplicando uma transformação AX R^N -> R^N
+for k = 1:M
+    x(1:N, k) = A * x(1:N, k);
+end
+[C, mu] = estimador_matriz_covariancias(x);
+
+% Aplicando uma outra transformação TX R^N -> R^N
+% seguindo KLT
+y = zeros(size(x));
+
+% Calculando autovalores e autovetores
+[v, L] = eig(C);
+% Sorteando autovetores e autovalores
+[L, i] = sort(L, 'descend');
+v = v(:, i);
+T = v.'; % matriz de transformação KLT
+for k = 1:M
+    y(1:N, k) = T * x(1:N, k);
+end
+[CYY, muY] = estimador_matriz_covariancias(y);
+
+function [C, mu] = estimador_matriz_covariancias(matriz_dados)
+    M = size(matriz_dados, 2);
+    mu = estimador_vetor_medias(matriz_dados);
+    matriz_dados = matriz_dados - repmat(mu, 1, M);
+    C = matriz_dados * matriz_dados.';
+    C = 1 / (M -1) * C;
+end
+
+function mu - estimador_vetor_medias(matriz_dados)
+    mu = sum(matriz_dados.').';
+    mu = mu / size(matriz_dados, 2);
+end
+
+\end{minted}
+\end{document}
