@@ -1,0 +1,134 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.25em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\renewcommand\u[1]{\underbar{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{Experimento com Sinais}
+Com sinais de ECG e sEMG posicionamos em cada coluna de uma matriz um pulso do sinal de ECG ou uma
+bulha do EMG dinâmico. Na matriz de dados: separar 70\% para cálculo de $T$ e 30\% das realizações
+para testes.
+
+O principal objetivo é fazer a análise de componentes principais. Obter a matriz da transformada de
+Kahunen-Loève. Alguns resultados esperados:
+\begin{itemize}
+    \item Observar visualmente a concentração da informação em poucos coeficientes.
+    \item Quantificar $l_0$ (qtd. não nulos), $l_1$ (soma dos módulos)
+    \item Fazer um experimento de compressão de sinais por transformadas:
+    \begin{itemize}
+        \item Calcular diferentes transformadas do vetor de teste (DFT, DCT, DST, DWT);
+        \item Zerar os $N_b$ com $N_a = N - N_b$ coeficientes de menor magnitude;
+        \item Obter a transformada inversa;
+        \item Computar a relação sinal-erro (SER);
+        \item Plotar a relação SER em função de $N_a$.
+    \end{itemize}
+\end{itemize}
+
+\section{Processos Estocásticos em Domínio Contínuo e em Domínio Discreto de Duração Infinita}
+Considere um experimento aleatório cujos resultados possíveis são elementos do espaço amostral $S$.
+Um processo Estocástico $\mathbf{X}$ é uma função que associa resultados do experimento a sinais em
+tempo contínuo ou discreto:
+\begin{align*}
+    \mathbf{X}: S \to E_s,
+\end{align*}
+com $E_s$ é um espaço de sinais.
+
+Por exemplo, podemos ter $E_s$ como o conjuntos de todos os sinais em tempo contínuo $x_c :
+\mathbb{R} \to \mathbb{R}$.
+\\
+Podemos ter ainda $E_s$ como o conjunto de todos os sinais em tempo discreto $x: \mathbb{Z} \to R$.
+\\
+Por fim, podemos ter ainda $E_s$ como o conjunto de todos os sinais em tempo discreto com duração
+$N$: $x: \{0,1,2,3,\ldots, N\} \to \mathbb{R}$. \textit{É idêntico (isometria) ao caso do vetor
+aleatório estabelecido anteriormente.}
+
+\subsection{Observação}
+Dado um processo estocástico em tempo contínuo, podemos definir uma função que atua sobre cada
+sinal $E_s$, gerando um novo sinal, ou um vetor, ou um único número:
+
+\begin{itemize}
+    \item $g: E_s \to E_s^{'}$ - um novo espaço de sinais
+    \item $g: E_s \to \mathbb{R}^N$ - espaço de vetores N-dimensionais
+    \item $g: E_s \to \mathbb{R}$ - conjunto de números
+\end{itemize}
+\textit{Essas funções induzem um novo processo aleatório $Y = g(\mathbf{X}_c)$}.
+
+\end{document}
