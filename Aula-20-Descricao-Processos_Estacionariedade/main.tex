@@ -1,0 +1,175 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.25em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\renewcommand\u[1]{\underbar{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{Descrições Estatísticas de Processos Estocásticos}
+As principais descrições possíveis são: PDFs e Momentos. Considere um $t$ fixo; $X_{(t)}$ pode ser
+tratado como uma variável aleatória induzida. Nesse instante, podemos definir a PDF da v.a.
+induzida como $f_{X_C(t)}(x)$ ou $f_{X_C}(t, x)$: \textit{uma PDF marginal do processo para um
+instante}. Note que não é um descrição completa do processo, pois não reflete as possíveis
+dependências entre as v.a. associadas a instantes diferentes.
+
+Descrição completa do processo estocástico:
+\begin{itemize}
+    \item PDFs conjuntas associadas a todas as combinações de N instantes, para todo N inteiro
+        positivo
+    \item Todas as PDFs da forma $f_{X_C}(t_1,x_1;t_2,x_2;\ldots;t_N,x_N)$ para a qual é definida
+        uma PDF um vetor aleatório (com N pontos fixados)
+        \begin{itemize}
+            \item Note: a escolha de pontos $t_1,t_2,\ldots,t_N$, induz um vetor aleatório para o
+                qual a expressão acima é a PDF conjunta desse vetor aleatório.
+            \item Temos que conhecer para qualquer escolha de $t_1,t_2,\ldots,t_N$ para dizermos
+                que temos uma descrição completa.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Momentos de um Processo Estocásticos}
+Podemos medir momentos associados um processo aleatório.
+\begin{itemize}
+    \item Podemos definir todos os momentos do vetor aleatório induzido por um escolha de instantes
+        $t_1,t_2,\ldots,t_N$.
+        \begin{itemize}
+            \item Vetor média
+            \item Vetor de variâncias
+            \item Matriz de covariâncias
+            \item Matriz de correlação
+        \end{itemize}
+    \item Podemos definir uma função média (função expectâncias da variável induzida em instante
+        escolhido $t$)
+    \item Temos ainda uma função de autocovariância (autocovariância associada as componentes do
+    \item Por fim, temos a ainda a função de autocorrelação
+        vetor induzido pela escolha desses dois pontos)
+        \begin{itemize}
+            \item $\mu(t) = \int_{-\infty}^{\infty} x \cdot f_{X_C}(t,x)dx $
+            \item $C(t_1, t_2) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}
+                (x_1-\mu(t_1))(x_2-\mu(t_2))^* \cdot f_{X_C}(t_1,x_1,t_2,x_2) dx_1 dx_2$
+            \item $R(t_1, t_2) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty} x_1 \cdot x_2^* \cdot f_{X_C}(t_1,x_1,t_2,x_2) dx_1 dx_2$
+        \end{itemize}
+\end{itemize}
+
+\newpage
+\section{Processos Estacionários no Sentido Estrito e Amplo}
+Um processo estocástico é dito estacionário \textbf{no sentido estrito} se e somente se:
+\begin{itemize}
+    \item A PDF conjunta do vetor induzido por uma escolha de $N$ instantes depende apenas dos
+        intervalos entre esses instantes considerados, sendo uma condição válida para qualquer
+        quantidade de N pontos $\to N \in \{1,2,3,4, \ldots \}$.
+\end{itemize}
+
+O que pode ser interpretado como: A PDF é igual desde que sejam mantidas as distâncias entre os
+instantes observados.
+\begin{align*}
+    f_{X_C}(t_1,x_1,t_2,x_2,t_3,x_3,\ldots,t_N,x_N) = f_{X_C}(t_1+\Delta t,x_1,t_2+\Delta
+    t,x_2,t_3+\Delta t,x_3,\ldots,t_N+\Delta t,x_N), \forall \Delta t \in \mathbb{R}
+\end{align*}
+
+Um processo estocástico é dito estacionário \textbf{no sentido amplo} (critério menos exigente que
+para o sentido estrito) se e somente se:
+
+\begin{itemize}
+    \item A função expectância é constante (independente de $t$)
+    \item A função de correlações só depende da diferença entre os instantes considerados: $R(t_1,
+        t_2) = R(t_1 + \Delta t, t_2 + \Delta t), \forall t_1, t_2, \Delta t$
+\end{itemize}
+
+Note que, se o processo é estacionário no sentido amplo:
+\begin{align*}
+    C(t_1, t_2) &= R(t_1,t_2) - \mu(t_1) \cdot \mu(t_2)^* \\
+    C(t_1 + \Delta t, t_2 + \Delta t) &= R(t_1 + \Delta t, t_2 + \Delta t) - \mu(t_1+\Delta t) \cdot
+    \mu(t_2 + \Delta t)^* \\
+    C(t_1 + \Delta t, t_2 + \Delta t) &= R(t_1, t_2) - \mu(t_1) \cdot \mu(t_2)^* \\
+    C(t_1, t_2) &= C(t_1 + \Delta t, t_2 + \Delta t)
+\end{align*}
+
+\subsection{Notação}
+No caso de processos estacionário no sentido amplo, a covariância e correlação não precisam mais ser
+definidas em função de dois pontos. Podemos definir as funções em termos de duas funções de uma
+única variável, que é a distância entre os dois pontos considerados.
+\begin{align*}
+    r(t) &= R(t_1, t_1+t) \text{ o resultado é o mesmo para qualquer } t \\
+    c(t) &= C(t_1, t_1+t) \\
+\end{align*}
+
+
+
+\end{document}
