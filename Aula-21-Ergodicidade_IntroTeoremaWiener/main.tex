@@ -1,0 +1,121 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.25em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\renewcommand\u[1]{\underbar{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{Ergodicidade}
+Um processo é dito ergódico com respeito a um dado momento quando um estimador desse momento quando
+um estimador desse momento quando aplicado a diferentes intervalos de uma realização do sinal tem a
+mesma expectância que o estimador aplicado a um único intervalo em realizações distintas do
+processo.
+
+Tomamos um sinal ergódico na média (\textit{mean-ergodic}). Em uma realização, temos um estimador
+dentro de um sinal $\overline{\mu} = \frac{1}{N} \sum_{n=0}^{N-1} x[n]$. Para diversas realizações
+(método pela definição) temos $\overline{\mu[2]} = \frac{1}{M} \sum_{m=0}^{M-1} x_m[2]$. No caso da
+ergodicidade para a média esses valores se igual e tendem a zero quando a quantidade de realizações
+cresce indefinidamente.
+
+\vspace{1em}
+\section{Teorema de Wiener-Khinchin-Einstein}
+Considere um processo estocástico $X_c: S \to E_S$ do tipo WSS. Considere ainda $g: E_S \to E_S$,
+com $E_S$ um espaço de sinais que admitem transformada de Fourier e com $g(x) = \mathcal{F}\{x\}$.
+
+Note que $g(x)$ induz um novo processo $\widehat{X}: S \to E_S$, definido por: $\widehat{X}(s) =
+g(X(s))$.
+
+Nesta situação:
+\begin{align*}
+    \widehat{r}(f) = \lim_{T \to \infty} \left[ \frac{1}{T} \mathbb{E}[|\widehat{X_f}|^2 \cdot
+rect_{[-\frac{T}{2}, \frac{T}{2}]}(f)] \right] \end{align*}
+
+\vspace{0.25em}
+No caso de um processo branco: por definição $\frac{1}{T} \mathbb{E}[|\widehat{X_f}|^2 \cdot
+rect_{[-\frac{T}{2}, \frac{T}{2}]}(f)]$ é constante, ou seja, independente de f.
+
+Pelo teorema: $\frac{1}{T} \mathbb{E}[|\widehat{X_f}|^2 \cdot
+rect_{[-\frac{T}{2}, \frac{T}{2}]}(f)]$ tem que coincidir com a transformada de Fourier da
+autocorrelação logo, a T.F. de $r(t)$ tem que ser constante. Dessa maneira, $r(t) = k \delta(t)$.
+
+\textbf{Sintetizando o teorema:} A T.F da autocorrelação é a DEP (PSD), para um processo WSS.
+
+
+\end{document}
