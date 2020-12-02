@@ -1,0 +1,160 @@
+\documentclass{article}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage[normalem]{ulem}
+\usepackage{subcaption}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0pc}{-0.25em}{0pc}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.25em}{0.5em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\renewcommand\u[1]{\underbar{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\vn}{\varnothing}
+\newcommand\stk[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2}
+
+\makeatletter
+\global\let\tikz@ensure@dollar@catcode=\relax
+\makeatother
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{12pt}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{Teorema de Wiener-Kinchin-Einstein no Caso Discreto}
+Processo estocástico $X$, WSS. Com função de autocorrelação (dada pelo intervalo): $r[n]$ e função
+de covariância: $c[n]$.
+
+Definição de densidade espectral de potência do processo:
+\\
+Considere o processo $X_{[-N_1,N_1]}$ dado pelo janelamento de $X$:
+\begin{align*}
+    X_{[-N_1,N_1]}(s) = X(s) \cdot rect(-N_1,N_1)
+\end{align*}
+Considere ainda a DTFT do processo:
+\begin{align*}
+    \widehat{X}_{[-N_1,N_1]}(s) &= DTFT(X_{[-N_1,N_1]}(s)) \\
+    PSD_X(f) &= \lim_{N_1 \to \infty} \frac{1}{2N_1+1} \mathbb{E}(|\widehat{X}_{[-N_1,N_1]}^{(f)}|^2)
+\end{align*}
+Teorema:
+\begin{align*}
+    \widehat{r}(f) = PSD_X(f) = \lim_{N_1 \to \infty} \frac{1}{2N_1+1} \mathbb{E}(|\widehat{X}_{[-N_1,N_1]}^{(f)}|^2)
+\end{align*}
+
+\section{Filtragem de Processos Estocásticos}
+Ideia geral: Processo $X[n] \to X^{(n)}$ é entrada de um sistema LTI com resposta impulsional
+$h[n]$. \textit{Generalização de uma função de sinais} $g: E_S \to E_S$ definida por $g(x) = h*x$
+para processos $g(X(s)) = Y(s) = h * X(s)$.
+\\
+Considere $R_{XX}$ que é a função de autocorrelação de $X$. $R_{XX}[n_1,n_2] =
+\mathbb{E}[X_{n_1}\cdot X_{n_2}^*]$. Queremos a partir de $R_{XX}$ calcular $R_{YY}$:
+\begin{align*}
+    R_{YY}[n_1,n_2] &= \mathbb{E}[X_{n_1}\cdot X_{n_2}^*] \\
+    \text{Considerando: } R_{XY}[n_1,n_2] &= \mathbb{E}[X_{n_1}\cdot Y_{n_2}^*] \text{ (Correlação Cruzada)} \\
+    R_{YX}[n_1,n_2] &= \mathbb{E}[Y_{n_1}\cdot X_{n_2}^*] \\
+    R_{XY}[n_1,n_2] &= \mathbb{E}[X_{n_1}\cdot Y_{n_2}^*] = \mathbb{E}\left[X_{n_1} \cdot \sum_{m=0}^\infty h^*[m]X_{n_2-m}^*\right] \\
+    R_{XY}[n_1,n_2] &=  \sum_{m=0}^\infty h^*[m] \mathbb{E}\left[X_{n_1}\cdot X_{n_2-m}\right] \\
+    R_{XY}[n_1,n_2] &=  \sum_{m=0}^\infty h^*[m] R_{XX}[n_1,n_2-m]
+\end{align*}
+
+\subsection{Caso WSS}
+Se $X$ é estacionário no sentido amplo (WSS), então $R_{XX}[n_1, n_2-m]$ depende apenas de
+$n_2-m-n_1$, e não de $n_1$ e $n_2$.
+
+\begin{align*}
+    R_{XY}[n_1,n_2] &=  \sum_{m=-\infty}^\infty h^*[m] R_{XX}[n_1,n_2-m] \\
+    R_{XY}[n_1,n_2] &=  \sum_{m=-\infty}^\infty h^*[m] r_{XX}[n_2-n_1-m] \\
+    r_{XY}[n_1,n_2] &=   (h^* * r_{XX})_{[n_2-n_1-m]}
+\end{align*}
+
+$R_{XY}$ também só depende da diferença entre os instantes considerados para o caso WSS.
+
+Buscamos agora a autocorrelação da saída $R_{YY}[n_1,n_2]$:
+\begin{align*}
+    R_{XY}[n_1,n_2] &= \sum_{m=0}^\infty h^*[m] R_{XX}[n_1,n_2-m] \\
+    R_{YY}[n_1,n_2] &= \mathbb{E}[Y_{n_1}\cdot Y_{n_2}ˆ*] \\
+    R_{YY}[n_1,n_2] &= \mathbb{E}\left[Y_{n_1}\cdot \sum_{m=-\infty}^\infty h^*[m]X_{n_2-m}^*\right] \\
+    R_{YY}[n_1,n_2] &= \sum_{m=-\infty}^\infty h^*[m] \cdot \mathbb{E}\left[Y_{n_1}\cdot X_{n_2-m}^*\right] \\
+    R_{YX}[n_1,n_2] &= \mathbb{E}[Y_{n_1}\cdot X_{n_2}^*] = \sum_{m=-\infty}^\infty h[m]\cdot \mathbb{E}[X_{n_1-m} \cdot X_{n_2}^*] \\
+    R_{YX}[n_1,n_2] &= \sum_{m=-\infty}^\infty h[m]\cdot R_{XX}[n_1-m,n_2] \\
+    R_{YX}[n_1,n_2] &= \sum_{m=-\infty}^\infty h[m]\cdot r_{XX}[-[(n_1-n_2)-m]] \\
+    R_{YX}[n_1,n_2] &= \sum_{m=-\infty}^\infty h[m]\cdot \overline{r_{XX}}[(n_1-n_2)-m], \overline{r_{XX}} \text{ é uma reversão no tempo} \\
+    R_{YX}[n_1,n_2] &= (h * \overline{r_{XX}})_{[n_1-n_2]} \\
+    r_{YX}[n] &= (h * \overline{r_{XX}})_{[n]} \\
+    R_{YY}[n_1,n_2] &= \sum_{m=-\infty}^\infty h^*[m] \cdot \mathbb{E}\left[Y_{n_1}\cdot X_{n_2-m}^*\right] \\
+    R_{YY}[n_1,n_2] &= \sum_{m=-\infty}^\infty h^*[m] \cdot R_{YX}[n_1,n_2-m]
+\end{align*}
+Para sinal real (WSS): $r_{YX} = h * r_{XX}$
+\\
+Note que se o sinal é real e o filtro for real (WSS): $r_{XY} = h^* * r_{XX} = r_{YX} = h * r_{XX}$!
+
+Supondo que $X$ é real e WSS:
+\begin{align*}
+    r_{YX} &= h * r_{XX} \\
+    r_{YY} &= h^* * r_{YX} \\
+    r_{YY} &= h^* * (h * r_{XX})
+\end{align*}
+
+
+\end{document}
