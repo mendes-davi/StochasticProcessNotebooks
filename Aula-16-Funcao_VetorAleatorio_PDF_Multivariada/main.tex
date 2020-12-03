@@ -109,11 +109,10 @@ Solução:
 \begin{align*}
     C_{YY} &= \mathbb{E}[(Y-\mu_Y)(Y-\mu_Y)^H] \\
     C_{YY} &= \mathbb{E}[(AX-\mu_Y)(AX-\mu_Y)^H] \\
-    C_{YY} &= \mathbb{E}[(AX-\mu_Y)(AX-\mu_Y)^H] \\
     \mu_Y &= \mathbb{E}[Y] = \mathbb{E}[AX] = A\mu_X \\
     C_{YY} &= \mathbb{E}[(AX-A\mu_X)(AX-A\mu_X)^H] \\
     C_{YY} &= \mathbb{E}[(A(X-\mu_X))(A(X-\mu_X))^H] \\
-    \text{lembrando que: } (AB)^T &= A^TB \text{ e que também } (AB)^H = A^HB \\
+    \text{lembrando que: } (AB)^T &= B^TA^T \text{ e que também } (AB)^H = B^HA^H \\
     C_{YY} &= \mathbb{E}[A(X-\mu_X)(X-\mu_X)^HA^H] \\
     C_{YY} &= A\mathbb{E}[(X-\mu_X)(X-\mu_X)^H]A^H \\
     C_{YY} &= AC_{XX}A^H \\
@@ -165,18 +164,18 @@ No caso multivariado:
     \text{Exemplo } N &= 2, \\
     C_{XX} &=
     \begin{bmatrix}
-        \sigma^1_1 & c\\
+        \sigma^2_1 & c\\
         c & \sigma^2_2
     \end{bmatrix} \qquad
     C_{XX}^{-1} = \frac{1}{\sigma_1^1 \cdot \sigma_2^2 - c^2}
     \begin{bmatrix}
-        \sigma^1_2 & -c\\
+        \sigma^2_2 & -c\\
         -c & \sigma^2_1
     \end{bmatrix} \\
     f_X(\u{x}) &= \frac{1}{\sqrt{(2 \pi)^2 \cdot (\sigma_1^1 \cdot \sigma_2^2 - c^2)}}
     exp\left({-\frac{1}{2} (\u{x}-\mu_{\u{x}})^T \frac{1}{\sigma_1^1 \cdot \sigma_2^2 - c^2}
         \begin{bmatrix}
-            \sigma^1_2 & -c\\
+            \sigma^2_2 & -c\\
             -c & \sigma^2_1
         \end{bmatrix}
     (\u{x}-\mu_{\u{x}})}\right)
