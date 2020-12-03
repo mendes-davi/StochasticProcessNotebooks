@@ -1,0 +1,119 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[vmargin=3cm]{geometry}
+\usepackage{tikzpagenodes}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{background}
+\usepackage{titlesec}
+\usepackage[nodisplayskipstretch]{setspace}
+\usepackage{hyphenat}
+\usepackage{float}
+\usepackage{graphicx}
+\hyphenation{mate-mática recu-perar}
+
+\titlespacing{\section}{0em}{-0.5em}{0em}
+\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
+\titlespacing{\paragraph}{0em}{0.5em}{0em}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{1em}
+\linespread{1}
+
+\renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\bf[1]{\textbf{#1}}
+\renewcommand\it[1]{\textit{#1}}
+
+\newcommand\ov[1]{\overline{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\vn}{\varnothing}
+
+\DeclareMathOperator*{\argmin}{argmin} % no space, limits underneath in displays
+
+\newenvironment{nscenter}
+ {\parskip=1.25em\par\nopagebreak\centering}
+ {\par\noindent\ignorespacesafterend}
+
+\makeatletter
+\def\mcolor#1#{\@mcolor{#1}}
+\def\@mcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+\definecolor{notepadrule}{RGB}{217,244,244}
+
+\backgroundsetup{
+contents={%
+  \begin{tikzpicture}
+    \foreach \fila in {0,...,52}
+    {
+      \draw [line width=1pt,color=notepadrule]
+      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+    }
+    \draw[overlay,red!70!black,line width=1pt]
+      ([xshift=-1pt]current page text area.west|-current page.north) --
+      ([xshift=-1pt]current page text area.west|-current page.south);
+  \end{tikzpicture}%
+},
+scale=1,
+angle=0,
+opacity=1
+}
+
+\begin{document}
+
+\setlength{\abovedisplayskip}{12pt}
+\setlength{\belowdisplayskip}{0.75em}
+\setlength{\abovedisplayshortskip}{0pt}
+\setlength{\belowdisplayshortskip}{0pt}
+% \setlength{\baselineskip}{12pt}
+\setlength{\jot}{1pt}
+
+\section{Filtros de Wiener}
+Há um processo estocástico $x$ contaminado por ruído $\eta$, tal que: $x_r = x + \eta$. Sendo que
+$x$ é processo desejado e $x_r$ é o processo obtido.
+
+O filtro de Wiener objetiva minimizar o valor esperado do erro quadrático entre $y$ (saída do
+filtro) e $x$.
+\begin{align*}
+    e_n &= y_n - x_n \\
+    \text{valoe esperado do erro: } &\mathbb{E}\left[\frac{1}{N} \sum_{n=0}^{N-1} |y_n - x_n|^2\right]
+\end{align*}
+
+O Filtro de Wiener é obtido minimizando esse erro médio quadrático esperado.
+\begin{align*}
+    h^{\star} &= \argmin_{h} \mathbb{E}\left[ \frac{1}{N} \sum_{n=0}^{N-1} | (h*x_n)_n - x_n |^2 \right] \\
+    h^{\star} &= \argmin_{h} \mathbb{E}\left[ \frac{1}{N} \sum_{n=0}^{N-1}
+    [h*(x+\eta)_{[n]}-x_{[n]}] [h^* * (x^* + \eta^*)_{[n]} - x_{[n]}^*] \right]
+\end{align*}
+
+O desenvolvimento das expressões envolverá os seguintes termos:
+\begin{itemize}
+    \item $\mathbb{E}[x_{n_1}x_{n_2}^*]$ -- $R_{XX}[n_1, n_2]$, autocorrelação
+    \item $\mathbb{E}[x_{n_1}\eta_{n_2}^*]$ -- $R_{x\eta}[n_1,n_2]$ correlação cruzada
+\end{itemize}
+
+Supondo que $x$ é estacionário no sentido amplo:
+\begin{align*}
+    r_x[n_2-n_1] &= R_{XX}[n_1,n_2]
+\end{align*}
+
+Supondo que $x$ e $\eta$ são não-correlatos e que a média do ruído é nula e WSS também:
+\begin{align*}
+    R_{X\eta}[n_1,n_2] &= 0 \\
+    r_{\eta}[n_2-n_1] &= R_{\eta\eta}[n_1,n_2]
+\end{align*}
+
+
+
+
+\end{document}
