@@ -34,30 +34,30 @@
 \makeatletter
 \def\mcolor#1#{\@mcolor{#1}}
 \def\@mcolor#1#2#3{%
-  \protect\leavevmode
-  \begingroup
-    \color#1{#2}#3%
-  \endgroup
+	\protect\leavevmode
+	\begingroup
+	\color#1{#2}#3%
+	\endgroup
 }
 \makeatother
 \definecolor{notepadrule}{RGB}{217,244,244}
 
 \backgroundsetup{
-contents={%
-  \begin{tikzpicture}
-    \foreach \fila in {0,...,52}
-    {
-      \draw [line width=1pt,color=notepadrule]
-      (current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
-    }
-    \draw[overlay,red!70!black,line width=1pt]
-      ([xshift=-1pt]current page text area.west|-current page.north) --
-      ([xshift=-1pt]current page text area.west|-current page.south);
-  \end{tikzpicture}%
-},
-scale=1,
-angle=0,
-opacity=1
+	contents={%
+			\begin{tikzpicture}
+				\foreach \fila in {0,...,52}
+					{
+						\draw [line width=1pt,color=notepadrule]
+						(current page.west|-0,-\fila*12pt) -- ++(\paperwidth,0);
+					}
+				\draw[overlay,red!70!black,line width=1pt]
+				([xshift=-1pt]current page text area.west|-current page.north) --
+				([xshift=-1pt]current page text area.west|-current page.south);
+			\end{tikzpicture}%
+		},
+	scale=1,
+	angle=0,
+	opacity=1
 }
 
 \begin{document}
@@ -89,12 +89,12 @@ Um \bf{evento} é um conjunto dos resultados de um \it{experimento}.
 $\mathbb{P}(S)$ conjunto de todos os subconjuntos de $S$. Ex: $S = \{1,2,3\}$
 
 \begin{itemize}
-    \setlength\itemsep{-0.5em}
-    \item $\{1,2\}$ é um subconjunto de $S$
-    \item $\{1\}$ é um subconjunto de $S$
-    \item $\{3\}$ é um subconjunto de $S$
-    \item $\{\vn\}$ é um subconjunto de $S$
-    \item \ldots
+	\setlength\itemsep{-0.5em}
+	\item $\{1,2\}$ é um subconjunto de $S$
+	\item $\{1\}$ é um subconjunto de $S$
+	\item $\{3\}$ é um subconjunto de $S$
+	\item $\{\vn\}$ é um subconjunto de $S$
+	\item \ldots
 \end{itemize}
 
 \paragraph{Obs:} Note $\vn = \{\cdot\}$ \bf{entretanto} $\{\vn\} \neq \vn$
@@ -105,11 +105,11 @@ números reais tais que:
 
 
 \begin{enumerate}
-    \setlength\itemsep{0em}
-    \item Para qualquer evento $\mathbb{E}$, $P[\mathbb{E}] \geq 0$
-    \item $P[S] = 1$
-    \item Para qualquer coleção contável $A_1, A_2,\ldots$ de eventos mutuamente exclusivos:\\ $P[A_1
-        \cup A_2 \cup \ldots] = P[A_1] + P[A_2] + \ldots$
+	\setlength\itemsep{0em}
+	\item Para qualquer evento $\mathbb{E}$, $P[\mathbb{E}] \geq 0$
+	\item $P[S] = 1$
+	\item Para qualquer coleção contável $A_1, A_2,\ldots$ de eventos mutuamente exclusivos:\\ $P[A_1
+				      \cup A_2 \cup \ldots] = P[A_1] + P[A_2] + \ldots$
 \end{enumerate}
 
 Toda a teoria de probabilidade é baseada nesses três axiomas. Os axiomas 1 e 2 estabelecem a
@@ -120,38 +120,38 @@ união de conjuntos corresponde a soma das probabilidades.
 \subsubsection{$P(\vn) = 0$}
 Usando o axioma 3 note que:
 \begin{align*}
-    P(\vn \cup \vn \cup \vn \cup \ldots) = \sum_{i=1}^{\infty} P(\vn) \text{, pois } \vn \cap \vn = \vn \\
-    P(\vn) = \sum_{i=1}^{\infty} P(\vn) \text{ só converge se } P(\vn) = 0
+	P(\vn \cup \vn \cup \vn \cup \ldots) = \sum_{i=1}^{\infty} P(\vn) \text{, pois } \vn \cap \vn = \vn \\
+	P(\vn) = \sum_{i=1}^{\infty} P(\vn) \text{ só converge se } P(\vn) = 0
 \end{align*}
 
 \subsubsection{$P(A \cap \ov{B}) = P(A) - P(A \cap B) \; \forall \; A,B \in \mathbb{E}$}
 Manuseando a equação para mostrar que $P(A \cap \ov{B}) + P(A \cap B)= P(A)$. Primeiramente:
 \begin{align*}
-    (A \cap \ov{B}) \cap (A \cap B) &= \vn \text{, da álgebra Booleana: } A(\ov{B} + B) = \mcolor{blue}{(A\ov{B} + AB)}\\
-    \mcolor{blue}{(A \cap \ov{B}) \cup (A \cap B)} &= A \cap (\ov{B} \cup B) = A \cap S = A \\
-    P(A \cap \ov{B}) &= P(A) - P(A \cap B)
+	(A \cap \ov{B}) \cap (A \cap B)                & = \vn \text{, da álgebra Booleana: } A(\ov{B} + B) = \mcolor{blue}{(A\ov{B} + AB)} \\
+	\mcolor{blue}{(A \cap \ov{B}) \cup (A \cap B)} & = A \cap (\ov{B} \cup B) = A \cap S = A                                            \\
+	P(A \cap \ov{B})                               & = P(A) - P(A \cap B)
 \end{align*}
 
 \subsubsection{$P(\ov{A}) = 1 - P(A)$}
 Utilizando os Axiomas 3 e 2 fazemos:
 \begin{align*}
-    S &= A \cup \ov{A} \\
-    1 &= P(A) + P(\ov{A}) \\
-    P(\ov{A}) &= 1 - P(A)
+	S         & = A \cup \ov{A}    \\
+	1         & = P(A) + P(\ov{A}) \\
+	P(\ov{A}) & = 1 - P(A)
 \end{align*}
 
 \subsubsection{$P(A \cup B) = P(A) + P(B) - P(A \cap B) \; \forall \; A,B \in \mathbb{E}$}
 Notamos que $A \cap \ov{B}$ e $B$ são disjuntos e tem união $A \cup B$. Então:
 \begin{align}
-    P(A \cup B) = P(B) + P(A \cap \ov{B}) \label{eq:t4_1}
+	P(A \cup B) = P(B) + P(A \cap \ov{B}) \label{eq:t4_1}
 \end{align}
 Em seguida, notamos que $A \cap \ov{B}$ e $A \cap B$ são disjuntos e tem união $A$. Então:
 \begin{align}
-    P(A) = P(A \cap B) + P(A \cap \ov{B}) \label{eq:t4_2}
+	P(A) = P(A \cap B) + P(A \cap \ov{B}) \label{eq:t4_2}
 \end{align}
 Subtraindo \ref{eq:t4_2} de \ref{eq:t4_1}, obtemos:
 \begin{align*}
-    P(A \cup B) = P(A) + P(B) - P(A \cap B)
+	P(A \cup B) = P(A) + P(B) - P(A \cap B)
 \end{align*}
 
 \subsubsection{$0 \leq P(A) \leq 1, \; \forall \; A \in \mathbb{E}$}

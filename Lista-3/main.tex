@@ -18,7 +18,7 @@
 \hyphenation{mate-mática recu-perar}
 
 \titlespacing{\section}{0em}{-0.5em}{0em}
-\titlespacing{\subsection}{0pc}{0em}{0pc}
+\titlespacing{\subsection}{0pc}{0pt}{0pt}
 \titlespacing{\subsubsection}{0pc}{0.33em}{0pc}
 \titlespacing{\paragraph}{0em}{0.5em}{0em}
 \setlength{\parindent}{2em}
@@ -26,6 +26,9 @@
 \linespread{1}
 
 \renewcommand{\baselinestretch}{1.0}
+
+\renewcommand\thesubsection{\Alph{subsection}}
+\renewcommand\thesection{\Roman{section}}
 
 \renewcommand\bf[1]{\textbf{#1}}
 \renewcommand\it[1]{\textit{#1}}
@@ -69,16 +72,481 @@ opacity=1
 
 \begin{document}
 
-\setlength{\abovedisplayskip}{12pt}
-\setlength{\belowdisplayskip}{0.75em}
+\setlength{\abovedisplayskip}{4pt}
+\setlength{\belowdisplayskip}{4pt}
 \setlength{\abovedisplayshortskip}{0pt}
 \setlength{\belowdisplayshortskip}{0pt}
 % \setlength{\baselineskip}{12pt}
-\setlength{\jot}{1pt}
+\setlength{\jot}{2pt}
 
 \section*{Lista 3 - Processos Estocásticos}
 Davi de Alencar Mendes (16/0026415) \url{dmendes@aluno.unb.br}
-\section*{Problema 1}
 
-% \textit{That's all Folks}
+Professor: Dr. Cristiano Jacques Miosso
+
+\section{Problema 1}
+Considere que $X: \mathbb{S} \to \mathbb{R}$ é uma variável aleatória com função densidade de
+probabilidade $f_X$. Considera ainda a variável aleatória definida pela aplicação da função $g:
+\mathbb{R} \to \mathbb{R}$ aos resultados de $X$, com $g(x) = \alpha x + \beta$, sendo $\alpha,
+\beta \in \mathbb{R}$ e $\alpha \neq 0$. Assim, $Y = \alpha X + \beta$. A este respeito, responda os
+seguintes itens.
+
+\subsection{PDF de Y.}
+\begin{align*}
+    g(x) &= \alpha x + \beta & g'(x) &= \alpha \\
+    g^{-1} &= \frac{y-\beta}{\alpha} = x & f_Y(y) &= \frac{f_X\left(\frac{y-\beta}{\alpha}\right)}{\alpha}
+\end{align*}
+
+\subsection{Valor esperado de Y usando valor esperado de X (LOTUS)}
+\begin{align*}
+    \mathbb{E}[Y] &= \mathbb{E}[g(x)] \\
+    \mathbb{E}[Y] &= \int_{-\infty}^{\infty} (\alpha x + \beta)f_X dx = \alpha \mathbb{E}[X] + \beta
+\end{align*}
+
+\subsection{Variância de Y usando Variância de X}
+\begin{align*}
+    Var[X] &= \mathbb{E}[X^2] -(\mathbb{E}[X])^2 \\
+    Var[Y] &= \mathbb{E}[Y^2] -(\mathbb{E}[Y])^2 \\
+    \mathbb{E}[Y^2] &= \int_{-\infty}^{\infty} (\alpha x + \beta)^2 \cdot f_X dx =
+    \int_{-\infty}^{\infty} (\alpha^2 x^2 + + 2 \alpha \beta x + \beta^2) \cdot f_X dx \\
+    \mathbb{E}[Y^2] &= \alpha\cdot\int_{-\infty}^{\infty} x^2 f_X dx + 2 \alpha \beta \cdot
+    \int_{-\infty}^{\infty} x f_X dx + \beta^2 \cdot \int_{-\infty}^{\infty} f_X dx \\
+    \mathbb{E}[Y^2] &= \alpha^2 \mathbb{E}[X^2] + 2 \alpha \beta \mathbb{E}[X] + \beta^2 \\
+    Var[Y] &= \alpha^2 \mathbb{E}[X^2] + 2 \alpha \beta \mathbb{E}[X] + \beta^2 - (\alpha^2
+    (\mathbb{E}[X])^2 + \beta^2) \\
+    Var[Y] &= \alpha^2 Var[X]
+\end{align*}
+
+\section{Problema 2}
+Considere que $X: \mathbb{S} \to \mathbb{R}$ é uma variável aleatória com distribuição uniforme no
+intervalo $[-1,4)$. Seja ainda $Y = 3 X + 8$.
+
+\subsection{PDF de Y}
+\begin{align*}
+    X &\sim U [-1,4) && Y = 3 X + 8, \alpha=3, \; \beta=8 \\
+    f_X(x) &=
+    \begin{cases}
+        \frac{1}{5}, \text{ se } -1 \leq x < 4, \\
+        0 \text{ c.c.} \\
+    \end{cases}&&
+f_Y(y) = \frac{f_X\left(\frac{y-8}{3}\right)}{3} =
+    \begin{cases}
+        \frac{1}{15}, \text{ se } 5 \leq y < 20\\
+        0 \text{ c.c.}
+    \end{cases}
+\end{align*}
+
+\subsection{Valor Esperado de Y}
+\begin{align*}
+    \mathbb{E}[Y] &= \int_{5}^{20} y f_Y(y)dy = \int_{-1}^{4} (3x+8)f_X(x)dx = 3 \mathbb{E}[X] + 8 = 12.5
+\end{align*}
+
+\subsection{Variância de Y}
+\begin{align*}
+    Var[Y] &= \mathbb{E}[Y^2] - (\mathbb{E}[Y])^2 \\
+    \ldots\\
+    Var[Y] &= \alpha^2 Var[X] = 9 \cdot Var[X] = 18.75
+\end{align*}
+
+\section{Problema 3}
+\ldots Uma variável X do tipo gaussiano com média 3 e variância 4. Considere $Y = 2X - 6$, e respoda
+os itens seguintes.
+
+\subsection{PDF de Y}
+\begin{align*}
+    X &\sim \mathcal{N}
+    \begin{cases}
+        \mu = 3\\
+        \sigma^2 = 4
+    \end{cases}& Y &= 2X - 6 \\
+    f_X(x) &= \frac{1}{\sqrt{2\pi\sigma^2}} \cdot \exp{\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)} &
+f_y(y) &= \frac{1}{\sqrt{2\pi\sigma^2}} \cdot \exp{\left(-\frac{(\frac{y-\beta}{\alpha}-\mu)^2}{2\sigma^2}\right)}
+\end{align*}
+
+\subsection{Média e Variância de $Y$}
+\begin{align*}
+    \mathbb{E}[Y] &= \alpha \mathbb{E}[X] + \beta = 2\cdot3 - 6 = 0 \\
+    Var[Y] &= \alpha^2 Var[X] = 2^2 \cdot 4 = 16
+\end{align*}
+
+\subsection{Calcule o momento central de ordem 3 normalizado. O valor era esperado?}
+Pela definição (para uma variável aleatória $X$):
+\begin{align*}
+    Skew[X] &= \widetilde{\mu}_3 = \mathbb{E}\left[ \left( \frac{X - \mu}{\sigma} \right)^3
+    \right] = \frac{\mu_3}{\sigma^3} \\
+    Skew[X] &= \frac{\mathbb{E}[X^3] -3\mu\mathbb{E}[X^2] +3\mu^2\mathbb{E}[X] -
+    \mu^3}{\sigma^3} \\
+    Skew[X] &= \frac{\mathbb{E}[X^3] -3\mu(\mathbb{E}[X^2] -\mu\mathbb{E}[X])-\mu^3}{\sigma^3} \\
+    Skew[X] &= \frac{\mathbb{E}[X^3] -3\mu\sigma^2 -\mu^3}{\sigma^3}
+\end{align*}
+
+Buscando $\mathbb{E}[Y^3]$:
+\begin{align*}
+    \mathbb{E}[Y^3] &= \int_{-\infty}^{\infty} y^3 f_Y(y)dy = \int_{-\infty}^{\infty} (2x-6)^3f_X(x)dx \\
+    \mathbb{E}[Y^3] &= \int_{-\infty}^{\infty} (8x^3-72x^2+216x-216)f_X(x)dx \\
+    \mathbb{E}[Y^3] &= \int_{-\infty}^{\infty} (8x^3)f_X(x)dx +
+                       \int_{-\infty}^{\infty} (-72x^2)f_X(x)dx +
+                       \int_{-\infty}^{\infty} (216x)f_X(x)dx +
+                       \int_{-\infty}^{\infty} (-216)f_X(x)dx \\
+    \mathbb{E}[Y^3] &= \int_{-\infty}^{\infty} (8x^3)f_X(x)dx +
+                       \int_{-\infty}^{\infty} (-72x^2)f_X(x)dx +
+                       216\cdot\mathbb{E}[X] + 216
+\end{align*}
+    % \mathbb{E}[Y^3] &=
+As integrais restantes são integrais de Laplace com solução para:
+\begin{align*}
+    \int_{-\infty}^{\infty} z^n \cdot e^{-\alpha \cdot z^n} &= \frac{1\cdot3\cdot5\cdot\ldots(n+1)\pi^{1/2}}{2^{n/2}\alpha^{(n+1)/2}}
+\end{align*}
+
+Aplicando para as integrais anteriores a mudança: $z = x - \mu, dx = dz$ é possível obter
+(\textit{omitindo boa parte do desenvolvimento})
+\begin{align*}
+    \mathbb{E}[Y^3] &= 8\cdot(\mu\cdot\sigma^2 + \mu^3) -72\cdot(\mu^2 + \sigma^2) + 216\cdot\mu + 216 \\
+    \mathbb{E}[Y^3] &= 8\cdot(3\cdot3\cdot4+3^3) -72\cdot(3^3+4) + 216\cdot3 + 216 = 0 \\
+    Skew[Y] &= 0
+\end{align*}
+
+O valor era esperado já que VAs do tipo gaussiano são totalmente descritas em termos de média e
+variância (2 momentos somente).
+
+% TODO gráfico Q3
+\subsection{Trace o gráfico da PDF de $Y$ e compare com o de $X$. O que muda?}
+
+\section{Problema 4}
+Seja $X$ um vetor aleatório de 2 componentes com distribuição uniforme em $[-1,4]\times[-2,8]$.
+Responda os seguintes itens.
+
+\subsection{PDF Conjunta de $X$}
+\begin{align*}
+    X &= \begin{bmatrix} x_1\\x_2 \end{bmatrix} & X &\sim \mathcal{U}[-1,4]\times[-2,8]
+\end{align*}%
+\begin{align*}
+    \int_{{-1}}^{{4}} {\int_{-2}^{8}c \cdot dx_1} \: d{x_2} = 1, \quad c = \frac{1}{50} \qquad
+    f_X(x_1,x_2) = \frac{1}{50}
+\end{align*}
+
+\subsection{PDF Marginal da 1a componente}
+\begin{align*}
+    f_{x_1}(x_1) &=\int_{-2}^{8} \frac{1}{50}dx_2 = \frac{1}{5}
+\end{align*}
+
+\subsection{PDF Marginal da 2a componente}
+\begin{align*}
+    f_{x_2}(x_2) &=\int_{-1}^{4} \frac{1}{50}dx_1 = \frac{1}{10}
+\end{align*}
+
+\subsection{Vetor de valores esperados}
+\begin{align*}
+    \mathbb{E}[X] = \begin{bmatrix} 1.5\\3 \end{bmatrix}
+\end{align*}
+
+\subsection{Vetor de variâncias}
+\begin{align*}
+    \mathbb{E}[x_1^2] &= \int_{-1}^4 x_1^2 \frac{1}{5}dx_1 = \frac{x^3}{15} \bigg\rvert_{-1}^{4} = \frac{13}{3} \\
+    Var[x_1] &= \frac{13}{3} - (1.5)^2 = \frac{25}{12} \\
+    \mathbb{E}[x_2^2] &= \int_{-2}^8 x_2^2 \frac{1}{10}dx_2 = \frac{x^3}{10} \bigg\rvert_{-2}^{8} = \frac{52}{3} \\
+    Var[x_2] &= \frac{52}{3} - (3)^2 = \frac{25}{3} \\
+    Var[X] &= \begin{bmatrix} \frac{25}{12} & \frac{25}{3} \end{bmatrix}^T
+\end{align*}
+
+\subsection{Matriz de Autocovariâncias}
+\begin{align*}
+    R_X &= \mathbb{E}[XX^T] \\
+    C_X &= \mathbb{E}[(X-\mu_X)(X-\mu_X)^T] \\
+    C_X &= R_X - \mu_X\mu_X^T \\
+    R_X &= \begin{bmatrix} \mathbb{E}[x_1^2] & \mathbb{E}[x_1x_2]\\\mathbb{E}[x_2x_1] & \mathbb{E}[x_2^2] \end{bmatrix}  \\
+    \mathbb{E}[x_2x_1] &= \mathbb{E}[x_1x_2] = \int_{-1}^4 \int_{-2}^8 x_1x_2 \cdot \frac{1}{50}
+    dx_1 dx_2 = \frac{9}{2} \\
+\end{align*}
+\begin{align*}
+    R_X &= \begin{bmatrix} \frac{13}{3} & \frac{9}{2}\\\frac{9}{2} & \frac{52}{3} \end{bmatrix} &
+    \mu_X\mu_X^T &= \begin{bmatrix} 2.25 & 4.5\\4.5 & 9 \end{bmatrix} \\
+    C_X &= \begin{bmatrix} \frac{25}{12} & 0\\0 & \frac{26}{3} \end{bmatrix}
+\end{align*}
+
+\subsection{As componentes são correlatas ou não?}
+Não são! $C_X$ é matrix diagonal.
+
+\subsection{As componentes são dependentes ou não?}
+São independentes visto que a PDF pode ser fatorada.
+
+\section{Problema 5}
+Sobre o Problema 4, determine:
+
+\subsection{$P(X_2 > X_1)$?}
+\begin{align*}
+    P(X_2 > X_1) &= \int_{-1}^4 \int_{x_1}^8 \frac{1}{50} dx_2 dx_1 = 0.65  \\
+    P(X_1 > X_2) &= \int_{-1}^4 \int_{-2}^{x_1} \frac{1}{50} dx_2 dx_1 = 0.35
+\end{align*}
+
+\subsection{$P(X_2 > 2X_1)$?}
+\begin{align*}
+    P(X_2 > 2X_1) &= \int_{-1}^4 \int_{2x_1}^8 \frac{1}{50} dx_2 dx_1 = 0.5
+\end{align*}
+
+\section{Problema 6}
+\begin{align*}
+    f_X(x_1,x_2,x_3) &= \frac{3}{4\pi a^3}, \text{ se } \sqrt{x_1+x_2+x_3} < a \\
+    P[A] &= \int\int\int_S f_X(x_1,x_2,x_3) dx_1 dx_2 dx_3, \text{ com } S = \{\sqrt{x_1+x_2+x_3} < 2a/3\} \\
+    \text{ Em coordenadas esféricas}&
+    \begin{cases}
+        r^2 = x_1^2 + x_2^2 + x_3^2 \\
+        x_1 = r \sin\phi \cos\theta \\
+        x_2 = r \sin\phi \sin\theta \\
+        x_3 = r \cos\phi
+    \end{cases} dx_1 dx_2 dx_3 = r^2 \sin\phi dr d\phi d\theta \\
+    P[A] &= \frac{3}{4\pi a^3} \int_{0}^{2a/3} \int_{0}^{\pi} \int_{0}^{2\pi} r^2 \sin\phi \; d\theta d\phi dr
+\end{align*}
+
+A integral é bastante simples e corresponde a uma fração do volume total já que $f_X$ é uniforme ao
+longo do raio. Por esse motivo $P[A]$ pode ser obtido como uma razão dos volumes: $(2a/3)/a^3 = 8/27 \approx 0.3$.
+
+\section{Problema 7}
+Considere que $X$ é um vetor aleatório de 2 componentes com:
+\begin{align*}
+    C_{XX} &= \begin{bmatrix} 4 & 1\\1 & 4 \end{bmatrix} \qquad \mu_X = \begin{bmatrix} 2\\3 \end{bmatrix} \\
+    Y &= AX + b, \qquad A = \begin{bmatrix} 1 & 2\\-2 & 3 \end{bmatrix}, \;\; b = \begin{bmatrix} 1\\4 \end{bmatrix}
+\end{align*}
+
+\subsection{Matriz de Autocovariâncias de $Y$?}
+\begin{align*}
+    \mu_Y &= \mathbb{E}[AX + b] = A\mu_X + b \\
+    Y - \mu_Y &= A(X -\mu_X) \\
+    C_{YY} &= \mathbb{E}[(Y-\mu_Y)(Y-\mu_Y)^H] \\
+    C_{YY} &= \mathbb{E}[(A(X-\mu_X))(A(X-\mu_X))^H] \\
+    \text{com } (AB)^T &= B^TA^T \text{ e também } (AB)^H = B^HA^H \\
+    (A(X-\mu_X))^H &= (X-\mu_X)^HA^H \\
+    C_{YY} &= \mathbb{E}[A(X-\mu_X)(X-\mu_X)^HA^H] \\
+    C_{YY} &= A\mathbb{E}[(X-\mu_X)(X-\mu_X)^H]A^H \\
+    C_{YY} &= A C_{XX} A^H
+\end{align*}
+
+Aplicando em $C_{XX}$:
+\begin{align*}
+    C_{YY} = \begin{bmatrix} 1&2\\-2&3 \end{bmatrix} \cdot
+    \begin{bmatrix} 4&1\\1&4 \end{bmatrix} \cdot
+    \begin{bmatrix} 1&-2\\2&3 \end{bmatrix} =
+    \begin{bmatrix} 24&15\\15&40 \end{bmatrix}
+\end{align*}
+
+\subsection{Matriz de autocorrelações de $Y$?}
+\begin{align*}
+    R_{YY} &= \mathbb{E}[YY^H] \\
+    R_{YY} &= \mathbb{E}[(AX+b)(AX+b)^H] \\
+    R_{YY} &= \mathbb{E}[(AX+b)((AX)^H+b^H)] \\
+    R_{YY} &= \mathbb{E}[AXX^HA^H + AXb^H + bX^HA^H + bb^H] \\
+    R_{YY} &= AR_{XX}A^H + (A\mu_X)b^H + b(A\mu_X)^H + bb^H
+\end{align*}
+
+Buscando $R_{XX}$:
+\begin{align*}
+    C_{XX} &= R_{XX} - \mu_X\mu_X^T \\
+    R_{XX} &= \begin{bmatrix} 8&7\\7&13 \end{bmatrix} \\
+    R_{YY} &= \begin{bmatrix} 105&96\\96&121 \end{bmatrix}
+\end{align*}
+
+\subsection{Valor Médio de $Y$}
+\begin{align*}
+    \mu_Y &= A \cdot \mu_X + b = \begin{bmatrix} 1 & 2\\-2 & 3 \end{bmatrix} \cdot \begin{bmatrix}
+    2\\3 \end{bmatrix}  + \begin{bmatrix} 1\\4 \end{bmatrix} = \begin{bmatrix} 9\\9 \end{bmatrix}
+\end{align*}
+
+\subsection{O vetor $Y$ é correlato?}
+Sim, o vetor é correlato. $C_{YY}$ não é matriz diagonal.
+
+\subsection{O vetor $Y$ é independente?}
+Não é independente.
+
+\subsection{Qual a PDF de Y, supondo distribuição gaussiana?}
+\begin{align*}
+    f_Y(\mathbf{y}) &= \frac{1}{\sqrt{(2\pi)^2 \det{C_{YY}}}} \cdot \exp{\left(-\frac{1}{2}(y-\mu_Y)^T C_{YY}^{-1} (y-\mu_Y)\right)} \\
+    C_{YY}^{-1} &= \begin{bmatrix} \frac{8}{147} & \frac{-1}{49}\\\frac{-1}{49} & \frac{8}{245} \end{bmatrix}, \qquad \det{C_{YY}} = 735, \\
+    f_Y(\mathbf{y}) &= \frac{1}{\sqrt{(2\pi)^2 \cdot 735}} \cdot \exp{\left(-\frac{4y_1^2}{147} + y_1\frac{(y_2+15)}{49} -\frac{4y_2^2}{245} + \frac{27y_2}{245} -\frac{459}{245}\right)}\\
+\end{align*}
+
+\subsection{Matriz de Transformação $M$ e  vetor $v$ tal que $Z = MY + v$ seja não correlato e
+possua média nula}
+
+Para obter o vetor $v$ basta:
+\begin{align*}
+    \mathbb{E}[Z] &= \mathbb{E}[MY + v] = M\mu_Y + v = 0 \\
+    v &= M\mu_Y
+\end{align*}
+
+\subsubsection{EVD - Decomposição Espectral (\textit{Eigenvalue Decomposition})}
+Em uma matriz $A_{N \times N}$, Solucionando $(A -\lambda I)k = 0$ é possível encontrar os
+autovetores associados aos autovalores $k$. O polinômio característico $p(\lambda) = det(A - \lambda
+I)$ possui N raízes, algumas com possível multiplicidade maior que 1.
+
+Pelas características dos autovetores é possível decompor:
+\begin{align*}
+    Av &= \lambda v \\
+    A Q &= Q \Lambda \\
+    A &= Q \Lambda Q^{-1}
+\end{align*}
+\begin{itemize}
+    \item $A_{N \times N}$ - matriz com $n$ autovetores $q_i$ linearmente independentes
+    \item $\Lambda$ - matriz diagonal com autovalores ao longo da diagonal principal ($\Lambda_{ii} = \lambda_i$)
+    \item $Q$ - matriz com i-ésima coluna sendo autovetor $q_i$ de $A$.
+\end{itemize}
+
+Algumas propriedades:
+\begin{enumerate}
+    \item Se $A$ é simétrica, $Q$ (matriz formada pelos autovetores de $A$) é ortogonal com $Q^{-1} = Q^T$
+    \item $[\Lambda^{-1}]_{ii} = 1/\lambda_i$, pois $\Lambda$ é diagonal
+    \item Se $A$ é hermitiana e positiva definida, $Q$ será unitária com $Q^{-1} = Q^H$
+\end{enumerate}
+
+\subsubsection{Buscando a Matriz de Transformação $M$}
+\begin{align*}
+    C_{ZZ} &= M C_{YY} M^H, \text{ fazendo } C_{YY} = Q \Lambda Q^{-1} \\
+    C_{ZZ} &= M Q \Lambda Q^{-1} M^H = M Q \Lambda Q^H M^H, \text{ fazendo } M = Q^H = Q^{-1} \\
+    C_{ZZ} &= Q^{-1}Q \Lambda Q^{-1} Q = I \Lambda I = \Lambda \\
+    C_{ZZ} &= \Lambda, \text{ para } M = Q^H
+\end{align*}
+
+Os dados do problema são:
+\begin{align*}
+    C_{YY} &= \begin{bmatrix} 24 & 15\\15 & 40 \end{bmatrix} \qquad p(\lambda) = \lambda^2 -64\lambda + 735
+    \begin{cases}
+        \lambda_1 = 15\\
+        \lambda_2 = 49
+    \end{cases}\\
+    C_{YY} - 15I &= \begin{bmatrix} 9 & 15\\15 & 25 \end{bmatrix} \qquad \text{ (RREF) }
+    \begin{bmatrix} 1 & 5/3\\0 & 0 \end{bmatrix} \begin{bmatrix} m_1\\m_2 \end{bmatrix} = m_1 +\frac{5}{3}m_2 = 0 \\
+    v_1 &= \begin{bmatrix} 1 \\ 5/3 \end{bmatrix}, \qquad \widehat{v_1} = \frac{\sqrt{34}}{34} \begin{bmatrix} 5\\-3  \end{bmatrix} \\
+    C_{YY} - 49I &= \begin{bmatrix} -25 & 15\\15 & -9 \end{bmatrix} \qquad \text{ (RREF) }
+    \begin{bmatrix} 1 & -3/5\\0 & 0 \end{bmatrix} \begin{bmatrix} m_1\\m_2 \end{bmatrix} = m_1 -\frac{3}{5}m_2 = 0 \\
+    v_2 &= \begin{bmatrix} 1 \\ -3/5 \end{bmatrix}, \qquad \widehat{v_2} = \frac{\sqrt{34}}{34} \begin{bmatrix} 3\\5  \end{bmatrix} \\
+\end{align*}
+
+Finalmente, obtemos $Q, \Lambda, v$:
+\begin{align*}
+    Q &= \frac{\sqrt{34}}{34} \begin{bmatrix} 5&3\\-3&5 \end{bmatrix} \\
+    \Lambda &= \begin{bmatrix} 15&0\\0&49 \end{bmatrix} \\
+    M &= Q^{-1} = \frac{\sqrt{34}}{34} \begin{bmatrix} 5&-3\\3&5 \end{bmatrix} \\
+v &= M\mu_Y = \frac{\sqrt{34}}{17} \begin{bmatrix} 9\\36 \end{bmatrix}
+\end{align*}
+
+\section{Problema 8}
+Considere que $X$ é um vetor aleatório com função de densidade de probabilidade dada por
+\begin{align*}
+    f_X(x_1, x_2) &= \frac{\sqrt{2}}{16\pi} \exp{\left(-\frac{9}{64}x_1^2+\frac{1}{16}x_1x_2-\frac{1}{16}x_2^2\right)}
+\end{align*}
+
+\subsection{Calcule $M$ tal que $Y = MX$ seja um vetor não correlato}
+É possível usar uma PDF gaussiana multivariada como protótipo para $f_X(\mathbf{x})$ de maneira que
+\begin{align*}
+    f_X(\mathbf{x}) &= \frac{1}{\sqrt{(2\pi)^2 \det{C_{XX}}}} \cdot \exp{\left(-\frac{1}{2}\mathbf{x}^T C_{XX}^{-1} \mathbf{x}\right)} \\
+C_{XX}^{-1} &= \begin{bmatrix} a&b\\c&d \end{bmatrix} \qquad
+C_{XX} = \frac{1}{ad-bc} \begin{bmatrix} d&-b\\-c&a \end{bmatrix} \qquad \det{C_{XX}} = (4\cdot\sqrt{2})^2 \\
+\left(-\frac{1}{2}\mathbf{x}^T C_{XX}^{-1} \mathbf{x}\right) &= \left(-\frac{9}{64}x_1^2+\frac{1}{16}x_1x_2-\frac{1}{16}x_2^2\right)
+\end{align*}
+
+Buscando $C_{XX}^{-1}$
+\begin{align*}
+\left(-\frac{1}{2}\mathbf{x}^T C_{XX}^{-1} \mathbf{x}\right) &= \left(-\frac{9}{64}x_1^2+\frac{1}{16}x_1x_2-\frac{1}{16}x_2^2\right)\\
+-\frac{1}{2}\left(ax_1^2 + (b+c)x_1x_2 + dx_2^2\right) &= \left(-\frac{9}{64}x_1^2+\frac{1}{16}x_1x_2-\frac{1}{16}x_2^2\right) \\
+a = 9/32 \quad b = c  &= -1/16  \quad d = 1/8, \text{ b é igual a c por simetria de } C_{XX}
+\end{align*}
+
+Montando $C_{XX}$:
+\begin{align*}
+    C_{XX}^{-1} &= \begin{bmatrix} 9/32 & -1/16 \\ -1/16 & 1/8 \end{bmatrix} \quad C_{XX} = \begin{bmatrix} 4 & 2 \\ 2 & 9 \end{bmatrix}
+\end{align*}
+
+Aplicando a KLT com a matriz $M$ e realizando EVD de $C_{XX}$
+\begin{align*}
+C_{YY} &= M C_{XX} M^H \\
+C_{XX} &= Q \Lambda Q^{-1} \\
+\text{com } M &= Q^{-1}, \; C_{YY} = \Lambda
+\end{align*}
+
+\begin{align*}
+    Q &= \begin{bmatrix} 1 & 1 \\ -\frac{(\sqrt{41}-5)}{4} & \frac{\sqrt{41}+5}{4} \end{bmatrix} \qquad
+    \Lambda = \begin{bmatrix} -\frac{(\sqrt{41}-13)}{2} & 0 \\ 0 & \frac{(\sqrt{41}+13)}{2}\end{bmatrix} \qquad
+    M = Q^{-1} = \begin{bmatrix} \frac{5\sqrt{41}}{82}+\frac{1}{2} & -\frac{2\sqrt{41}}{41} \\ \frac{1}{2}\frac{-5\sqrt{41}}{82} & \frac{2\sqrt{41}}{41}\end{bmatrix}
+\end{align*}
+
+\subsection{O vetor $Y$ é independente ou dependente?}
+$C_{YY} = \Lambda, \det{C_{YY}} \neq 0$. É independente (pdf pode ser fatorada) em duas
+exponenciais.
+
+% TODO
+\subsection{Forneça gráfico da PDF de $X$}
+\subsection{Forneça gráfico da PDF de $Y$ e compare como o item anterior}
+
+\section{Problema 9}
+Seja $X: \mathbb{S} \to \mathbb{R}^N$ um vetor aleatório, com $N$ sendo inteiro positivo. Seja ainda
+$X_i$ a variável aleatória correspondente à i-ésima componente de $X$, com $i \in \{1,2,\ldots,N\}$.
+Responda os itens.
+
+\subsection{Determine a PDF de $X_1 + X_2$. Qual a operação entre as PDFs de $X_1$ e $X_2$ que gera
+essa PDF?}
+Iniciamos com $g(X) = Y = X_1 + X_2$. Para tal
+\begin{align*}
+    h(x_1,x_2) &= \begin{bmatrix} x_1+x_2\\x_1 \end{bmatrix}
+    \qquad J_h = \det{\left(\frac{\partial h}{\partial x}\right)} = \begin{vmatrix} 1&1\\1&0 \end{vmatrix} = 1
+\end{align*}
+
+Com $w \in \mathbb{R}^2$, temos a PDF de $W$ no ponto $w$:
+\begin{align*}
+f_W(w) = \sum_i \frac{f_X(x^{(i)})}{|\det{J_h(x^{(i)})}}, \text{ com } \{x^{(1)},x^{(2)},\ldots\}
+\end{align*}
+Conjunto de todos os vetores $x^{(i)}$ tais que $g(x^{(i)}) = w \ \forall \; w \in \mathbb{R}^2,
+x^{(i)} = \begin{bmatrix} w_2 \\ w_1-w_2 \end{bmatrix} $
+
+Fazemos:
+\begin{align*}
+    f_Y(y) &= \int_{-\infty}^{\infty} f_x(w_2, y - w_2) d{w_2} \text{ (caso geral)} \\
+    &\text{Para o caso em que as componentes de X são independentes:} \\
+    f_Y(y) &= \int_{-\infty}^{\infty} f_X(w_2) \cdot f_X(y-w_2) d{w_2} \text{ (note que trata-se de uma convolução!)}
+\end{align*}
+
+\subsection{Determine PDF de $X_1^2 + X_2^2$ para $X_1, X_2$ gaussianas e independentes entre si}
+
+\subsection{As variáveis $X_1, X_2$ são independentes?}
+Considere que a correlação entre $X_1$ e $X_2$ vale 400, que as médias de $X_1$ e $X_2$ são,
+respectivamente, 10 e 20, que as variância sejam 4 e 16 respectivamente.
+
+Pelos dados da questão:
+\begin{align*}
+    \mathbb{E}[X_2X_1] = \mathbb{E}[X_1X_2] = 400 \quad \mu_X = \begin{bmatrix} 10\\20 \end{bmatrix} \quad Var[X] = \begin{bmatrix} 4\\16 \end{bmatrix}
+\end{align*}
+
+Buscando a matriz de correlação
+\begin{align*}
+    Var[X_i] &= \mathbb{E}[X_i^2] - (\mathbb{E}[X_i])^2 \\
+    \begin{bmatrix} 4\\16 \end{bmatrix} &= \mathbb{E}[X^2] - \left(\begin{bmatrix} 10\\20 \end{bmatrix}\right)^2 \\
+    \mathbb{E}[X^2] &= \begin{bmatrix} 104\\416 \end{bmatrix} \\
+    R_{XX} &=  \begin{bmatrix} \mathbb{E}[X_1^2]&\mathbb{E}[X_1X_2] \\ \mathbb{E}[X_2X_1]&\mathbb{E}[X_2^2] \end{bmatrix} = \begin{bmatrix} 104&400\\400&416 \end{bmatrix} \\
+    C_{XX} &= R_{XX} -\mu_X\mu_X^T = \begin{bmatrix} 4&200\\200&16 \end{bmatrix}
+\end{align*}
+
+SOS: Algo deu errado aqui!  $C_{XX}$ possui autovalores negativos. Determinante igualmente negtivo!
+
+\subsection{Igual ao anterior (?)}
+O problema D está igual ao item C. Possível \textit{typo}.
+
+% \subsection{Determine PDF Conjunta usando item os dados do item anterior}
+% Bem, basta aplicar:
+% \begin{align*}
+%     f_X(\mathbf{x}) &= \frac{1}{\sqrt{(2\pi)^2 \det{C_{XX}}}} \cdot \exp{\left(-\frac{1}{2}(x-\mu_X)^T C_{XX}^{-1} (x-\mu_X)\right)} \\
+%     \left(-\frac{1}{2}(x-\mu_X)^T C_{XX}^{-1} (x-\mu_X)\right) &= \left(\frac{x_2^1}{4992}+x_1\cdot\left(\frac{5}{52}-\frac{25x_2}{4992}\right)+\frac{x_2^2}{19968}+\frac{5x_2}{105}-\frac{5}{26}\right)
+% \end{align*}
+
+\section{Problema 10}
+Seja $X: \mathbb{S} \to \mathbb{R}^N$ um vetor aleatório, com distribuição gaussiana.
+
+Repetindo parte do procedimento do exercício anterior:
+\begin{align*}
+    Var[X] &= \begin{bmatrix} 1\\4 \end{bmatrix} \quad \mu_X = \begin{bmatrix} 1\\4 \end{bmatrix}
+    \quad \mathbb{E}[X^2] = \begin{bmatrix} 2\\20 \end{bmatrix} \\
+    R_{XX} &= \begin{bmatrix} 2&100\\100&20 \end{bmatrix} \quad C_{XX} = \begin{bmatrix} 1&96\\96&4 \end{bmatrix}
+\end{align*}
+
+Algo está errado (???)
+$C_{XX}$ possui autovalores negativos. Determinante igualmente negtivo!
+
+\textit{That's all Folks}
 \end{document}
